@@ -59,16 +59,9 @@ COSMOSDB_MASTER_KEY=$(az cosmosdb list-keys \
 printf "\n\nReplace <STORAGE_CONNECTION_STRING> with:\n$STORAGE_CONNECTION_STRING\n\nReplace <COSMOSDB_CONNECTION_STRING> with:\n$COSMOSDB_CONNECTION_STRING\n\nReplace <COSMOSDB_MASTER_KEY> with:\n$COSMOSDB_MASTER_KEY\n\n"
 
 $STORAGE_CONNECTION_STRING
-DefaultEndpointsProtocol=https;EndpointSuffix=core.windows.net;AccountName=cloudshell1330972892;AccountKey=i05V//nbLwYlGIRzkPfRYvDEPBlpFSkvJJxVqjWI0eDGQ5Sv9MSwskbiecwYOABvPbUgqMEeaS8xmjAz24iv0Q==
-
 $COSMOSDB_ACCOUNT_NAME
-msl-sigr-cosmos-5b7866b8d2
-
 $COSMOSDB_CONNECTION_STRING
-AccountEndpoint=https://msl-sigr-cosmos-5b7866b8d2.documents.azure.com:443/;AccountKey=rp8djBiZLJJXzxPIpoEUmsRIMHAAT5yKno84hIo4YmU6DINLvpxd1OrqoOFUsyPlnS6LHF36No8w2XFlau1gTA==;
-
 $COSMOSDB_MASTER_KEY
-rp8djBiZLJJXzxPIpoEUmsRIMHAAT5yKno84hIo4YmU6DINLvpxd1OrqoOFUsyPlnS6LHF36No8w2XFlau1gTA==
 
 5. Editar el archivo local.settings.json y actualizar las 
 variables
