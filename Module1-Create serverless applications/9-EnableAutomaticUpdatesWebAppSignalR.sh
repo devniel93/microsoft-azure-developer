@@ -274,6 +274,56 @@ npm start
 16. Ejecutar update para comprobar la actualizacion en la web
 npm run update-data
 
+#### Implementacion en Azure 
 
+1. Configurar Visual Studio Code con la suscripcion Azure
 
+Obtener identificador 
+az account list --query "[?name=='Concierge Subscription'].tenantId" -o tsv
+
+Configurar en Archivo > Preferencias > Configuración > Configuración 
+de usuario > Extensiones > Configuración de Azure.
+En tenant pegar el identificador obtenido
+
+Cerrar e iniciar sesion en Azure
+az logout > az login o F1 y seleccionar Azure:Logout y Azure:Login
+
+2. Implementar la aplicacion de funcion 
+F1 y seleccionar Azure Functions: Deploy to Function App:
+- Creación de una aplicación de funciones en Azure... Opciones avanzadas
+- Windows
+- Javascript
+- Omitir Insights
+
+3. Actualiazar public/index.html.js y reemplazar <FUNCTION_APP_ENDPOINT> 
+con el punto de conexion de la funcion del paso anterior
+
+4. Cargar la configuracion local
+F1 y seleccionar Azure Functions: Cargar configuración local.
+Seleccionar la aplicacion de funcoines creado y sobreescribir todas las 
+opciones de configuracion
+
+5. Configurar sitio web estatico en Azure Storage
+
+F1 y seleccionar Azure Storage: Configure Static Website 
+Seleccionar cuenta storage
+Seleccionar index.html como nombre del documento de índice de la cuenta
+Escribir index.html como ruta de acceso predeterminada del documento de 
+error 404.
+
+6. Implementar la aplicacion web en Azure Storage
+F1 y seleccionar Azure Storage: Deploy to Static Website 
+Seleccionar cuenta storage
+Seleccione Examinar y elija la subcarpeta public que contiene 
+la aplicación web.
+
+7. Configurar CORS en la aplicacion de funcion
+
+En Azure Portal > Function App > API, seleccionar CORS y habilitar el 
+check Access-Control-Allow-Credentials.
+Agregar una entrada punto de conexión principal del sitio web estático 
+que es la url de storageaccount
+
+8. Comprobar la ejecucion de la aplicacion web y la actualizacion de data
+npm run update-data
 
