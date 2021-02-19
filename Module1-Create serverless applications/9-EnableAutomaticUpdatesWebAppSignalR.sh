@@ -82,6 +82,103 @@ npm start
 que despues de unos segundos los datos son actualizados
 npm run update-data
 
+#########
+
+Using SignalR
+
+- SignalR es una abstracción de una serie de tecnologías que permite a la 
+aplicación disfrutar de comunicación bidireccional entre el cliente y el 
+servidor. SignalR controla automáticamente la administración de conexiones y 
+permite difundir mensajes a todos los clientes conectados de forma simultánea, 
+como un salón de chat.
+
+- Una ventaja fundamental de la abstracción que ofrece SignalR es la manera en 
+que admite reservas de "transporte". Un transporte es la forma de comunicación 
+entre el cliente y el servidor. Las conexiones de SignalR comienzan con una 
+solicitud HTTP estándar. Cuando el servidor evalúa la conexión, se selecciona 
+el método de comunicación más adecuado (transporte). 
+
+- La capa de abstracción que ofrece SignalR proporciona dos ventajas a la 
+aplicación. La primera es la perdurabilidad de la aplicación. A medida que la 
+web evoluciona y surgen API superiores a WebSockets, no es necesario cambiar la 
+aplicación.
+
+- La segunda ventaja es que SignalR permite que la aplicación se degrade gradualmente 
+según las tecnologías compatibles del cliente. Si no admite WebSockets, se usa 
+Server Sent Events. Si el cliente no puede controlar Server Sent Events, usa 
+sondeo largo de Ajax y así sucesivamente.
+
+# Crear una cuenta de SignalR
+
+1. Obtener un nombre de SignalR
+
+SIGNALR_SERVICE_NAME=msl-sigr-signalr$(openssl rand -hex 5)
+az signalr create \
+  --name $SIGNALR_SERVICE_NAME \
+  --resource-group learn-df81609e-4503-48bd-8b35-45302d7998d8 \
+  --sku Free_DS2 \
+  --unit-count 1
+
+2. Actualizar modo de servicio
+az resource update \
+  --resource-type Microsoft.SignalRService/SignalR \
+  --name $SIGNALR_SERVICE_NAME \
+  --resource-group learn-df81609e-4503-48bd-8b35-45302d7998d8 \
+  --set properties.features[flag=ServiceMode].value=Serverless
+
+3. Obtener cadena de conexion de SignalR
+
+SIGNALR_CONNECTION_STRING=$(az signalr key list \
+  --name $(az signalr list \
+    --resource-group learn-df81609e-4503-48bd-8b35-45302d7998d8 \
+    --query [0].name -o tsv) \
+  --resource-group learn-df81609e-4503-48bd-8b35-45302d7998d8 \
+  --query primaryConnectionString -o tsv)
+
+printf "\n\nReplace <SIGNALR_CONNECTION_STRING> with:\n$SIGNALR_CONNECTION_STRING\n\n" 
+
+4. Actualizar el archivo local.setting.json con la cadena de conexion
+en la propiedad AzureSignalRConnectionString 
+
+5. Crear funcion de Azure por Visual Code de tipo HTTP Trigger con nombre
+negotiate y nivel de autorizacion Anonymous
+
+6. En negotiate/function.json agregar el siguiente Binding
+
+{
+    "type": "signalRConnectionInfo",
+    "name": "connectionInfo",
+    "hubName": "stocks",
+    "direction": "in",
+    "connectionStringSetting": "AzureSignalRConnectionString"
+}
+
+7. Actualizar en negotiate/index.js
+
+module.exports = async function (context, req, connectionInfo) {
+    context.res.body = connectionInfo;
+};
+
+8. Crear nueva funcion de Azure de tipo Cosmos DB Trigger con nombre 
+stocksChanged, configuracion de aplicacion: AzureCosmosDBConnectionString,
+nombre de BD: stocksdb, nombre de coleccion: stocks, nombre de colecion 
+de concesiones: leases, crear coleccion si no existe: true
+
+9. En stocksChanged/function.json agregar la siguiente propiedad
+"feedPollDelay": 500
+
+Y anexar el siguiente Binding
+{
+  "type": "signalR",
+  "name": "signalRMessages",
+  "connectionString": "AzureSignalRConnectionString",
+  "hubName": "stocks",
+  "direction": "out"
+}
+
+
+
+
 
 
 
