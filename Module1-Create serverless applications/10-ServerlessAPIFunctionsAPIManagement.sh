@@ -57,6 +57,34 @@ Cambiar el sufijo de la direcion URL de API > products
 Notese que el dominio de la URL cambio por el de APIM
 https://myapim-devniel93.azure-api.net/products/ProductDetails...
 
+########
+
+Desafíos de la arquitectura de microservicios
+- Las aplicaciones cliente están acopladas a los microservicios. Si desea 
+cambiar la ubicación o la definición del microservicio, es posible que tenga 
+que volver a configurar o actualizar la aplicación cliente.
+- Cada microservicio se puede presentar en diferentes nombres de dominio o 
+direcciones IP. Esta presentación puede dar una impresión de incoherencia a 
+los usuarios y puede afectar negativamente a su marca.
+- Puede ser difícil aplicar reglas y estándares de API coherentes en todos 
+los microservicios. Por ejemplo, un equipo puede optar por responder con XML 
+y otro puede preferir JSON
+- Se depende de equipos individuales para implementar la seguridad en los 
+microservicios correctamente. Es difícil imponer estos requisitos 
+centralmente
+
+Ventas de API Management
+- Las aplicaciones del cliente están acopladas a la API que expresa la lógica 
+empresarial, no a la implementación técnica subyacente con microservicios 
+individuales. Puede cambiar la ubicación y la definición de los servicios sin 
+tener que reconfigurar o actualizar necesariamente las aplicaciones cliente.
+- API Management actúa como intermediario. Reenvía las solicitudes al 
+microservicio correcto y devuelve las respuestas a los usuarios. Los usuarios 
+nunca ven los diferentes URI donde se alojan los microservicios.
+- Se puede usar directivas de API Management para aplicar reglas coherentes en 
+todos los microservicios en el producto. Por ejemplo, se puede transformar 
+todas las respuestas XML en JSON
+- Las directivas también le permiten aplicar requisitos de seguridad coherentes.
 
 
 
