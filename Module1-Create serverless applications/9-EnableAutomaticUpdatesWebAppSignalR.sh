@@ -176,9 +176,103 @@ Y anexar el siguiente Binding
   "direction": "out"
 }
 
+10. Actualiazr el archivo stocksChanged/index.js
 
+module.exports = async function (context, documents) {
+    const updates = documents.map(stock => ({
+        target: 'updated',
+        arguments: [stock]
+    }));
 
+    context.bindings.signalRMessages = updates;
+    context.done();
+}
 
+11. Acualizar public/index.html en la secion del div="app"
+<div id="app" class="container">
+    <h1 class="title">Stocks</h1>
+    <div id="stocks">
+        <div v-for="stock in stocks" class="stock">
+            <transition name="fade" mode="out-in">
+                <div class="list-item" :key="stock.price">
+                    <div class="lead">{{ stock.symbol }}: ${{ stock.price }}</div>
+                    <div class="change">Change:
+                        <span
+                            :class="{ 'is-up': stock.changeDirection === '+', 'is-down': stock.changeDirection === '-' }">
+                            {{ stock.changeDirection }}{{ stock.change }}
+                        </span>
+                    </div>
+                </div>
+            </transition>
+        </div>
+    </div>
+</div>
+
+12. Incluir script justo encima de la referencia a index.html.js.
+<script src="https://cdn.jsdelivr.net/npm/@aspnet/signalr@1.1.0/dist/browser/signalr.js"></script>
+
+13. Actualizar el archivo public/index.html.js
+const LOCAL_BASE_URL = 'http://localhost:7071';
+const REMOTE_BASE_URL = '<FUNCTION_APP_ENDPOINT>';
+
+const getAPIBaseUrl = () => {
+    const isLocal = /localhost/.test(window.location.href);
+    return isLocal ? LOCAL_BASE_URL : REMOTE_BASE_URL;
+}
+
+const app = new Vue({
+    el: '#app',
+    data() {
+        return {
+            stocks: []
+        }
+    },
+    methods: {
+        async getStocks() {
+            try {
+                const apiUrl = `${getAPIBaseUrl()}/api/getStocks`;
+                const response = await axios.get(apiUrl);
+                app.stocks = response.data;
+            } catch (ex) {
+                console.error(ex);
+            }
+        }
+    },
+    created() {
+        this.getStocks();
+    }
+});
+
+const connect = () => {
+    const connection = new signalR.HubConnectionBuilder()
+                            .withUrl(`${getAPIBaseUrl()}/api`)
+                            .build();
+
+    connection.onclose(()  => {
+        console.log('SignalR connection disconnected');
+        setTimeout(() => connect(), 2000);
+    });
+
+    connection.on('updated', updatedStock => {
+        const index = app.stocks.findIndex(s => s.id === updatedStock.id);
+        app.stocks.splice(index, 1, updatedStock);
+    });
+
+    connection.start().then(() => {
+        console.log("SignalR connection established");
+    });
+};
+
+connect();
+...
+
+14. Depurar la app con F5
+
+15. En una nueva terminal ejecutar para que corra localhost:8080
+npm start 
+
+16. Ejecutar update para comprobar la actualizacion en la web
+npm run update-data
 
 
 
