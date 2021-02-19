@@ -86,6 +86,32 @@ todos los microservicios en el producto. Por ejemplo, se puede transformar
 todas las respuestas XML en JSON
 - Las directivas también le permiten aplicar requisitos de seguridad coherentes.
 
+##########
+
+Agregar otro Function App a un API existente
+
+1. Ir al recurso API Management en Azure Portal
+2. Seleccionar API > Add API > Function App 
+3. Importar Function App OrderFunction
+4. Cambiar sufijo de direcion URL > orders
+5. Crear API
+6. Testear API en Azure Portal 
+7. Se puede comprobar usando curl
+
+Copiar el Gateway URL del recurso API Management y ejecutar
+GATEWAY_URL=<paste the URL here>
+
+Copiar la suscripcion/clave principal del APIM
+SUB_KEY=<paste the key here>
+
+Ejecutar curl
+curl -X GET "$GATEWAY_URL/products/ProductDetails?id=2" -H "Ocp-Apim-Subscription-Key: $SUB_KEY"
+curl -X GET "$GATEWAY_URL/orders/OrderDetails?name=Henri" -H "Ocp-Apim-Subscription-Key: $SUB_KEY"
+
+
+
+
+
 
 
 
