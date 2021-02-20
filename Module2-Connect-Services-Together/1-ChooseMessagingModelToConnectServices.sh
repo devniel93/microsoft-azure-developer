@@ -196,5 +196,56 @@ Si se requiere un modelo de mensajeria con una gran secuencia de eventos,
 Event Grid no seria una buena solucion porque esta diseñado para la 
 entrega de evento por vez. Se recomendaria usar Azure Event Hubs.
 
+#########
+
+¿Qué es Azure Event Hubs?
+Es un intermediario para el patrón de comunicación de publicación y 
+suscripción. Pero a diferencia de Event Grid, está optimizado para un 
+rendimiento extremadamente alto, un gran número de publicadores, seguridad 
+y resistencia.
+
+Event Hubs realiza bastantes servicios adicionales que hacen que se 
+parezca más a un bus de servicio o a una cola de mensajes que a un 
+simple emisor de eventos.
+
+Particiones
+- A medida que Event Hubs recibe las comunicaciones, las divide en 
+particiones. 
+- Las particiones son los búferes en los que se guardan las comunicaciones. 
+- Debido a los búferes de eventos, los eventos no son completamente efímeros 
+y un evento no se pierde solo porque un suscriptor esté ocupado o sin 
+conexión.
+- Los eventos permanecen en el búfer durante 24 horas antes de que expiren 
+de forma automática.
+- Cada instancia de Event Hubs tiene al menos dos particiones y cada 
+partición tiene un conjunto independiente de suscriptores
+
+Capture
+Event Hubs puede enviar todos los eventos inmediatamente a Azure Data 
+Lake o Azure Blob Storage para una persistencia permanente y económica.
+
+Autenticación
+- Todos los publicadores se autentican y emiten un token. 
+- Event Hubs puede aceptar eventos de dispositivos externos y aplicaciones 
+móviles
+
+¿Qué servicio elegir?
+
+Elegir Event Hubs si:
+- Se necesita admitir la autenticación de un gran número de publicadores.
+- Se necesita guardar una transmisión de eventos en Data Lake o 
+Blob Storage.
+- Se necesita la agregación o el análisis en la transmisión de eventos.
+- Se necesita mensajería de confianza o resistencia.
+
+Si se necsita una infraestructura simple de publicación y suscripción de 
+eventos con publicadores de confianza (por ejemplo, su propio servidor 
+web), se debe elegir Event Grid.
+
+
+
+
+
+
 
 
