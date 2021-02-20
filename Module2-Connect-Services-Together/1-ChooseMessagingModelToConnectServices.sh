@@ -135,8 +135,66 @@ en la sucripcion de Azure
 - Definen qué eventos de un tema desea recibir un controlador de eventos. 
 - Una suscripción puede filtrar eventos por su tipo o asunto, para 
 asegurarse de que un controlador de eventos solo reciba los eventos pertinentes.
-- 
 
+¿Qué es un controlador de eventos?
+- Conocido a veces como "suscriptor" de un evento
+- Es cualquier componente (aplicación o recurso) que puede recibir eventos 
+de Event Grid
+
+Tipos de orígenes de eventos
+- Grupos de recursos y suscripciones de Azure: 
+Generan eventos relacionados a las operaciones de administración en Azure.
+
+- Registro de contenedor: 
+El servicio Azure Container Registry genera eventos cuando se agregan, 
+quitan o cambian imágenes en el registro.
+
+- Event Hub: Se usa para procesar eventos normalmente relacionados con
+registros y telemetria. Pueden generar eventos a Event Grid cuando se 
+capturan los archivos.
+
+- Service Bus: Puede generar eventos para Event Grid cuando hay mensajes 
+activos sin ningún agente de escucha activo.
+
+- Storage accounts: Pueden generar eventos cuando los usuarios agregan 
+blobs, archivos, entradas de tabla o mensajes de cola.
+
+- Media Services: hospeda archivos multimedia de vídeo y audio. Puede 
+generar eventos cuando un trabajo de codificacion de video se realiza.
+
+- Azure IoT Hub: IoT Hub se comunica con los dispositivos IoT y recopila 
+telemetría desde ellos, los cuales pueden generar eventos.
+
+- Eventos personalizados: Se pueden generar eventos personalizados 
+mediante la API REST o con el SDK de Azure en Java, GO, .NET, Node, 
+Python y Ruby
+
+Controladores de eventos
+- Azure Functions: código personalizado que se ejecuta en Azure serverless. 
+Se usa una función de Azure como un controlador de eventos cuando quiera 
+codificar una respuesta personalizada para el evento.
+
+Webhooks: Es una API web que implementa una arquitectura de inserción.
+
+Azure Logic Apps: hospeda un proceso de negocio como un flujo de trabajo.
+
+Microsoft Power Automate: hospeda flujos de trabajo, pero es más fácil de 
+usar para el personal no técnico.
+
+¿Cuando usar Event Grid?
+Cuando se necesite las siguientes caracteristicas:
+- Simplicidad: en Event Grid es muy fácil conectar los orígenes a los suscriptores.
+- Filtro avanzado: las suscripciones tienen un control detallado sobre los
+eventos que reciben de un topic.
+- Distribución unificada: puede suscribir un número ilimitado de puntos 
+de conexión a los mismos eventos y temas.
+- Confiabilidad: Event Grid reintenta la entrega de eventos hasta 24 horas
+para cada suscripción.
+- Pago por evento: pague solo por el número de eventos que transmita.
+
+Si se requiere un modelo de mensajeria con una gran secuencia de eventos,
+Event Grid no seria una buena solucion porque esta diseñado para la 
+entrega de evento por vez. Se recomendaria usar Azure Event Hubs.
 
 
 
