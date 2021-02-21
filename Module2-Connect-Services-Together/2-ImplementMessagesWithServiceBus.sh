@@ -265,7 +265,72 @@ Contiene un conjunto de condiciones que se comparan con las propiedades de
 cada mensaje. Si la propiedad del filtro y la propiedad del mensaje tienen 
 el mismo valor, se considera una coincidencia.
 
+#######
+Pasos para implementar en Azure Services Bus con Topics
 
+1. Editar performancemessagesender/Program.cs
 
+Para crear uun cliente de topic:
+topicClient = new TopicClient(ServiceBusConnectionString, TopicName);
 
+Para crear y dar formato a un mensaje para la cola:
+string messageBody = $"Total sales for Brazil in August: $13m.";
+var message = new Message(Encoding.UTF8.GetBytes(messageBody));
+Console.WriteLine($"Sending message: {messageBody}");
 
+Para enviar mensjae a la cola:
+await topicClient.SendAsync(message);
+
+Para cerrar la conexion a Service Bus:
+await topicClient.CloseAsync();
+
+2. Enviar mensaje al topic
+
+Ejecutar:
+dotnet run -p performancemessagesender
+
+Para obtener cuantos mensajes hay en el topic:
+az servicebus topic subscription show \
+    --resource-group learn-d7269f0d-25ae-4c34-9cf0-e0e6e54d37bb \
+    --namespace-name salesteamapp-devniel93 \
+    --topic-name salesperformancemessages \
+    --name Americas \
+    --query messageCount
+
+3. Editar performancemessagereceiver/Program.cs
+
+Para crear un lciente de suscripcion:
+subscriptionClient = new SubscriptionClient(ServiceBusConnectionString, TopicName, SubscriptionName);
+
+Para configurar opciones del control de mensajes
+var messageHandlerOptions = new MessageHandlerOptions(ExceptionReceivedHandler)
+{
+    MaxConcurrentCalls = 1,
+    AutoComplete = false
+};
+
+Para registrar el controlador de mensajes
+subscriptionClient.RegisterMessageHandler(ProcessMessagesAsync, messageHandlerOptions);
+
+Para mostrar los mensajes entrantes:
+Console.WriteLine($"Received sale performance message: SequenceNumber:{message.SystemProperties.SequenceNumber} Body:{Encoding.UTF8.GetString(message.Body)}");
+
+Para quitar el mensaje recibido de la suscripcion
+await subscriptionClient.CompleteAsync(message.SystemProperties.LockToken);
+
+Para cerrarla conexion a Service Bus
+await subscriptionClient.CloseAsync();
+
+4. Recuperar un mensjae de una suscripcion de topic
+
+Ejecutar:
+dotnet run -p performancemessagereceiver
+
+Ejecutar para ver cuantos mensajes quedan en la suscripcion del topic.
+Deberian haber 0
+az servicebus topic subscription show \
+    --resource-group learn-d7269f0d-25ae-4c34-9cf0-e0e6e54d37bb \
+    --namespace-name <namespace-name> \
+    --topic-name salesperformancemessages \
+    --name Americas \
+    --query messageCount
