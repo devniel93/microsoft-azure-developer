@@ -148,7 +148,8 @@ mensaje de la cola:
 
 await queueClient.CompleteAsync(message.SystemProperties.LockToken);
 
-Pasos para implementar en Azure 
+####### 
+Pasos para implementar en Azure Services Bus con Colas 
 
 1. Clonar proyecto base 
 git clone https://github.com/MicrosoftDocs/mslearn-connect-services-together.git
@@ -232,3 +233,39 @@ az servicebus queue show \
     --name salesmessages \
     --query messageCount \
     --namespace-name <namespace-name>
+
+########
+
+Escritura de codigo que usa Topics de Service Bus
+
+Si se quiere que todos los mensajes enviados se entreguen a todos los 
+componentes suscritos, tendrá que usar topics. Escribir código que usa 
+topics es una forma de reemplazar a las colas. 
+Se debe utilizar el mismo paquete NuGet Microsoft.Azure.ServiceBus, 
+configurar las cadenas de conexión y usar patrones de programación 
+asincrónica.
+Pero en este caso se debe usar la clase TopicClient en lugar de QueueClient 
+para enviar mensajes y la clase SubscriptionClient para recibirlos.
+
+Establecimiento de filtros en las suscripciones
+Los filtros pueden ser de tres tipos:
+- Boolean Filters:
+TrueFilter garantiza que todos los mensajes enviados al topic se entreguen 
+a la suscripción actual. FalseFilter garantiza que ninguno de los mensajes 
+enviados se entregue a la suscripción actual
+
+- SQL Filters:
+Especifica una condición con la misma sintaxis que una cláusula WHERE en 
+una consulta SQL. Solo los mensajes que devuelven True, se entregarán a 
+los suscriptores. Los filtros SQL son los más flexibles, aunque también 
+los más costosos, y podrían ralentizar el rendimiento de Service Bus
+
+- Correlation Filters:
+Contiene un conjunto de condiciones que se comparan con las propiedades de 
+cada mensaje. Si la propiedad del filtro y la propiedad del mensaje tienen 
+el mismo valor, se considera una coincidencia.
+
+
+
+
+
