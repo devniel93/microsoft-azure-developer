@@ -55,5 +55,58 @@ confidencial a través de la cola. Esta configuración garantiza que todas
 las conexiones a la cola se cifran mediante la Capa de sockets 
 seguros (SSL).
 
+Para crear un Storage Account por Azure CLI
 
+Ejecutar
+az storage account create --name [unique-name] -g learn-c76a479f-113b-405d-9344-c20569ee167e --kind StorageV2 --sku Standard_LRS
+
+#########
+
+Identificaciond e una cola
+- Cada cola tiene un nombre que se asigna durante la creación
+- El nombre debe ser único dentro de la cuenta de almacenamiento, pero no 
+tiene que ser único de forma global 
+- La combinación del nombre de su cuenta de almacenamiento y el 
+nombre de la cola identifica una cola.
+
+Autorización de acceso
+- Azure Active Directory:
+Puede usar la autenticación basada en roles e identificar clientes 
+específicos en función de las credenciales de AAD.
+- Clave compartida: 
+A veces se denomina clave de cuenta y se trata de 
+una firma de clave cifrada asociada con la cuenta de almacenamiento. Cada 
+cuenta de almacenamiento tiene dos de estas claves que se pueden pasar 
+con cada solicitud para autenticar el acceso. Usar este enfoque es similar 
+a utilizar una contraseña raíz: proporciona acceso total a la cuenta de 
+almacenamiento.
+- Firma de acceso compartido:	
+Una firma de acceso compartido (SAS) es un URI generado que concede acceso
+limitado a los objetos de la cuenta de almacenamiento a los clientes. 
+Puede restringir el acceso a recursos, permisos y un ámbito en concreto a 
+un intervalo de datos para desactivar automáticamente el acceso tras un 
+período de tiempo.
+
+
+Para obtener la clave de acceso del Storage Account
+- Por Azure CLI
+az storage account keys list ...
+
+- Por Powershell
+Get-AzStorageAccountKey ...
+
+Acceder a las colas
+Se accede a una cola mediante una API REST. 
+Por ejemplo: http://<storage account>.queue.core.windows.net/<queue name>. 
+Debe incluirse un encabezado Authorization con cada solicitud.
+
+Usar la biblioteca cliente de Azure Storage para .NET
+- Es una biblioteca que proporciona Microsoft y que formula solicitudes REST 
+y analiza las respuestas REST
+- La biblioteca cliente usa una cadena de conexión para establecer la 
+conexión. La cadena de conexión está disponible en la sección Configuración 
+de la cuenta de almacenamiento en Azure Portal, o bien mediante la CLI de 
+Azure y PowerShell.
+- Ejemplo:
+string connectionString = "DefaultEndpointsProtocol=https;AccountName=<your storage account name>;AccountKey=<your key>;EndpointSuffix=core.windows.net"
 
