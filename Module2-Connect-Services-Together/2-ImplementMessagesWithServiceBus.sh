@@ -94,3 +94,141 @@ por la cola.
 - Se espera que la cola supere el tamaño de 80 GB.
 - Se quiere realizar el seguimiento del progreso para procesar un mensaje 
 dentro de la cola
+
+#########
+
+Escritura de código que usa las colas de Service Bus
+
+El paquete Microsoft.Azure.ServiceBus de NuGet
+Para facilitar la escritura del código que se encarga de enviar y recibir 
+mensajes a través de Service Bus, Microsoft proporciona una biblioteca de 
+clases .NET Microsoft.Azure.ServiceBus.
+
+La clase más importante de esta biblioteca de colas es la clase 
+"QueueClient"
+
+Cadenas y claves de conexión
+Los componentes de origen y los de destino necesitan dos fragmentos de 
+información para conectarse a una cola:
+- La ubicación del espacio de nombres de Service Bus, también conocida como 
+punto de conexión. Por ejemplo: pizzaService.servicebus.windows.net.
+- Una clave de acceso. Service Bus restringe el acceso a colas, temas y 
+retransmisiones al requerir una clave de acceso.
+
+Llamar a los métodos de forma asincrónica
+La biblioteca cliente de Service Bus pone a disposición métodos async para
+interactuar con las colas para evitar que un subproceso se bloquee mientras
+se espera que las llamadas se completen.
+Usar el método QueueClient.SendAsync() con la palabra clave "await".
+
+Escritura del código que se envía a las colas
+
+- Usar lo siguienete siempre que se llame una cola de Service Bus:
+
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.Azure.ServiceBus;
+
+- Cree un objeto QueueClient, pasarle la cadena de conexión, el 
+nombre de la cola y enviar el mensaje en UTF8
+
+queueClient = new QueueClient(TextAppConnectionString, "PrivateMessageQueue");
+string message = "Sure would like a large pepperoni!";
+var encodedMessage = new Message(Encoding.UTF8.GetBytes(message));
+await queueClient.SendAsync(encodedMessage);
+
+Recepción de mensajes de la cola
+- Para recibir mensajes, primero debe registrar un controlador de mensaje
+
+queueClient.RegisterMessageHandler(MessageHandler, messageHandlerOptions);
+
+- Realizar las tareas de procesamiento. Después, en el controlador de 
+mensajes, llamar al método QueueClient.CompleteAsync() para quitar el 
+mensaje de la cola:
+
+await queueClient.CompleteAsync(message.SystemProperties.LockToken);
+
+Pasos para implementar en Azure 
+
+1. Clonar proyecto base 
+git clone https://github.com/MicrosoftDocs/mslearn-connect-services-together.git
+
+2. Obtener cadena de conexion
+az servicebus namespace authorization-rule keys list \
+    --resource-group learn-d7269f0d-25ae-4c34-9cf0-e0e6e54d37bb \
+    --name RootManageSharedAccessKey \
+    --query primaryConnectionString \
+    --output tsv \
+    --namespace-name salesteamapp-devniel93
+
+Endpoint=sb://salesteamapp-devniel93.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=EObydpjOfCI3GeebP78D6OwOlAW8/6GzsVhkFK9PtfY=
+
+3. Editar la cadena de conexion en privatemessagesender/Program.cs y en
+privatemessagereceiver/Program.cs :
+
+const string ServiceBusConnectionString = "";
+
+4. Editar privatemessagesender/Program.cs 
+
+Para crear una cliente de cola:
+queueClient = new QueueClient(ServiceBusConnectionString, QueueName);
+
+Para crear y dar formato a un mensaje para la cola:
+string messageBody = $"$10,000 order for bicycle parts from retailer Adventure Works.";
+var message = new Message(Encoding.UTF8.GetBytes(messageBody));
+Console.WriteLine($"Sending message: {messageBody}");
+
+Para enviar el mensaje a la cola:
+await queueClient.SendAsync(message);
+
+Para cerral la conexion a Service Bus:
+await queueClient.CloseAsync();
+
+5. Enviar mensaje a la cola
+
+Ejecutar:
+dotnet run -p privatemessagesender
+
+Para obtener cuantos mensajes hay en la cola:
+az servicebus queue show \
+    --resource-group learn-d7269f0d-25ae-4c34-9cf0-e0e6e54d37bb \
+    --name salesmessages \
+    --query messageCount \
+    --namespace-name <namespace-name>
+
+6. Editar privatemessagereceiver/Program.cs:
+
+Para crear un cliente de cola
+queueClient = new QueueClient(ServiceBusConnectionString, QueueName);
+
+Para configurar las opciones de control de mensajes:
+var messageHandlerOptions = new MessageHandlerOptions(ExceptionReceivedHandler)
+{
+    MaxConcurrentCalls = 1,
+    AutoComplete = false
+};
+
+Para registrar el controlador de mensajes:
+queueClient.RegisterMessageHandler(ProcessMessagesAsync, messageHandlerOptions);
+
+Para mostrar los mensajes entrantes en la cola, en el metodo 
+ProcessMessageAsync() editar:
+Console.WriteLine($"Received message: SequenceNumber:{message.SystemProperties.SequenceNumber} Body:{Encoding.UTF8.GetString(message.Body)}");
+
+Para quitar el mensaje recibido de la cola:
+await queueClient.CompleteAsync(message.SystemProperties.LockToken);
+
+Para cerrar la conexion:
+await queueClient.CloseAsync();
+
+7. Recuperar un mensaje de la cola
+
+Ejecutar:
+dotnet run -p privatemessagereceiver
+
+Ejecutar para ver cuantos mensajes quedan en la cola. Deberian haber 0.
+az servicebus queue show \
+    --resource-group learn-d7269f0d-25ae-4c34-9cf0-e0e6e54d37bb \
+    --name salesmessages \
+    --query messageCount \
+    --namespace-name <namespace-name>
