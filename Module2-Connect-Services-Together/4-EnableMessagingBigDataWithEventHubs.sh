@@ -215,3 +215,20 @@ java -jar ./target/simplesend-1.0.0-jar-with-dependencies.jar
 10. Ejecuta la aplicacion de recepcion de mensajes
 cd ~/azure-event-hubs/samples/Java/Basic/EventProcessorSample
 java -jar ./target/eventprocessorsample-1.0.0-jar-with-dependencies.jar
+
+########
+
+Evaluación del rendimiento del Event Hub implementado 
+mediante Azure Portal
+
+En Azure Portal > Información general del Event Hubs se muestran los 
+recuentos de mensajes. Estos recuentos de mensajes representan los datos 
+(eventos) recibidos y enviados por Event Hub.
+
+Otras métricas útiles disponibles en Event Hubs incluyen las siguientes:
+- Solicitudes limitadas: número de solicitudes limitadas debido a que el 
+rendimiento ha superado el uso de la unidad.
+- ActiveConnections: número de conexiones activas en un namespace o 
+Event Hub.
+- Bytes entrantes/salientes: número de bytes enviados y recibidos mediante el 
+servicio Event Hubs durante un período especificado.
