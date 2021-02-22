@@ -84,3 +84,33 @@ datos. Por default el valor es de 4.
 - Retención de mensajes: número de días (entre 1 y 7) que los mensajes seguirán 
 disponibles. Si no se define, el valor por default es de 7.
 
+Comandos de la CLI de Azure para crear una instancia de Event Hubs:
+az eventhubs eventhub
+
+##############
+
+Pasos para crear un Namespace y un EventHub 
+
+1. Configurar los recursos locales con Azure CLI
+az configure --defaults group=learn-2a9afa70-7bf4-4c31-8a43-c8b8969cc79b location=westus2
+
+2. Crear un Namespace
+NS_NAME=ehubns-$RANDOM
+az eventhubs namespace create --name $NS_NAME
+
+3. Obtener cadena de conexion
+az eventhubs namespace authorization-rule keys list \
+    --name RootManageSharedAccessKey \
+    --namespace-name $NS_NAME
+
+$PRIMARY_CONNECTION_STRING
+$PRIMARY_KEY
+
+4. Crear EventHub
+
+HUB_NAME=hubname-$RANDOM
+az eventhubs eventhub create --name $HUB_NAME --namespace-name $NS_NAME
+
+Para mostrar los detalles del Event Hub creado
+az eventhubs eventhub show --namespace-name $NS_NAME --name $HUB_NAME
+
