@@ -110,3 +110,21 @@ Azure y PowerShell.
 - Ejemplo:
 string connectionString = "DefaultEndpointsProtocol=https;AccountName=<your storage account name>;AccountKey=<your key>;EndpointSuffix=core.windows.net"
 
+############
+
+Creacion de una aplicacion que usara colas
+
+1. Crear aplicacion de ejemplo
+dotnet new console -n QueueApp
+
+2. En la carpeta QueueApp, realizar el build
+dotnet build
+
+3. Obtener cadena de conexion
+az storage account show-connection-string --name <name> --resource-group learn-c76a479f-113b-405d-9344-c20569ee167e
+
+Reeamplzar el parametro name con el nombre del storageaccount creado
+
+4. Crear una variable con la cadena de conexion en la clase Program.cs
+private const string ConnectionString = "DefaultEndpointsProtocol=https; ...";
+
