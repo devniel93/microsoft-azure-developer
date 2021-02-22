@@ -147,7 +147,7 @@ para un solo elemento.
 
 ########
 
-Adicion de un mensaje a la Cola
+Adicion y Recuperacion de un mensaje en la Cola
 
 1. Instala el pquete WindowsAzure.Storage
 
@@ -205,3 +205,47 @@ dotnet run Send this message
 6. Comprobar mensaje en la cola por Azure Portal o Azure CLI ejecutando:
 az storage message peek --queue-name newsqueue --connection-string "<connection-string>"
 
+7. Para recuperar un mensaje de la cola
+
+Editar Program.cs y agregar el metodo
+static async Task<string> ReceiveArticleAsync()
+{
+    CloudStorageAccount storageAccount = CloudStorageAccount.Parse(ConnectionString);
+
+    CloudQueueClient queueClient = storageAccount.CreateCloudQueueClient();
+
+    CloudQueue queue = queueClient.GetQueueReference("newsqueue");
+
+    bool exists = await queue.ExistsAsync();
+    if(exists)
+    {
+        CloudQueueMessage retrievedArticle  = await queue.GetMessageAsync();
+        if(retrievedArticle  != null)
+        {
+            string newsMessage = retrievedArticle.AsString;
+            await queue.DeleteMessageAsync(retrievedArticle);
+            return newsMessage;
+        }
+    }
+    return "<queue empty or not created>";
+}
+
+Agregar el metodo reutilizable para obtener el storage queue
+static CloudQueue GetQueue()
+{
+    CloudStorageAccount storageAccount = CloudStorageAccount.Parse(ConnectionString);
+
+    CloudQueueClient queueClient = storageAccount.CreateCloudQueueClient();
+    return queueClient.GetQueueReference("newsqueue");
+}
+
+8. Ejecutar build
+dotnet build
+
+9. Ejecutar la aplicacion
+
+Para recibir mensajes:
+dotnet run
+
+Par enviar mensajes 
+dotnet run Send Msg 1
