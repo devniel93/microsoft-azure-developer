@@ -114,3 +114,44 @@ az eventhubs eventhub create --name $HUB_NAME --namespace-name $NS_NAME
 Para mostrar los detalles del Event Hub creado
 az eventhubs eventhub show --namespace-name $NS_NAME --name $HUB_NAME
 
+##########
+
+Configuración de aplicaciones para enviar o recibir mensajes mediante un 
+Event Hub
+
+¿Cuáles son los requisitos mínimos para la aplicación del centro de eventos?
+
+Para configurar una aplicación para enviar mensajes a un Event Hub, debe 
+proporcionar la información siguiente:
+- El nombre del namespace para el Event Hub
+- Nombre del Event Hub
+- El nombre de la directiva de acceso compartido
+- La clave principal de acceso compartido
+
+Para configurar una aplicación para recibir mensajes de un Event Hub, debe
+proporcionar la información siguiente:
+- El nombre del namespace para el Event Hub
+- Nombre del Event Hub
+- El nombre de la directiva de acceso compartido
+- La clave principal de acceso compartido
+- El nombre de la cuenta de almacenamiento
+- La cadena de conexión de la cuenta de almacenamiento
+- El nombre del contenedor de la cuenta de almacenamiento
+
+Si se tiene una aplicación receptora que almacena mensajes en Azure Blob Storage,
+también deberá configurar una cuenta de almacenamiento.
+
+Comandos Azure CLI para crear una cuenta de almacenamiento Estándar de uso 
+general
+
+- Para crear una cuenta de almacenamiento de uso general V2.
+storage account create	
+
+- Para recuperar la clave de la cuenta de almacenamiento.
+storage account key list	
+
+- Para recuperar la cadena de conexión de una cuenta de Azure Storage.
+storage account show-connection-string	
+
+- Para crear un contenedor en una cuenta de almacenamiento.
+storage container create	
