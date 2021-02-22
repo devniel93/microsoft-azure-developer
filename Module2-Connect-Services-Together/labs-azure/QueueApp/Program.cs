@@ -17,6 +17,11 @@ namespace QueueApp
                 await SendArticleAsync(value);
                 Console.WriteLine($"Sent: {value}");
             }
+            else
+            {
+                string value = await ReceiveArticleAsync();
+                Console.WriteLine($"Received {value}");
+            }
         }
 
         static async Task SendArticleAsync(string newsMessage)
@@ -25,7 +30,8 @@ namespace QueueApp
 
             CloudQueueClient queueClient = storageAccount.CreateCloudQueueClient();
 
-            CloudQueue queue = queueClient.GetQueueReference("newsqueue");
+            //CloudQueue queue = queueClient.GetQueueReference("newsqueue");
+            CloudQueue queue = GetQueue();
             bool createdQueue = await queue.CreateIfNotExistsAsync();
             if (createdQueue)
             {
@@ -34,6 +40,36 @@ namespace QueueApp
 
             CloudQueueMessage articleMessage = new CloudQueueMessage(newsMessage);
             await queue.AddMessageAsync(articleMessage);
+        }
+
+        static async Task<string> ReceiveArticleAsync()
+        {
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(ConnectionString);
+
+            CloudQueueClient queueClient = storageAccount.CreateCloudQueueClient();
+
+            CloudQueue queue = queueClient.GetQueueReference("newsqueue");
+
+            bool exists = await queue.ExistsAsync();
+            if(exists)
+            {
+                CloudQueueMessage retrievedArticle  = await queue.GetMessageAsync();
+                if(retrievedArticle  != null)
+                {
+                    string newsMessage = retrievedArticle.AsString;
+                    await queue.DeleteMessageAsync(retrievedArticle);
+                    return newsMessage;
+                }
+            }
+            return "<queue empty or not created>";
+        }
+
+        static CloudQueue GetQueue()
+        {
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(ConnectionString);
+
+            CloudQueueClient queueClient = storageAccount.CreateCloudQueueClient();
+            return queueClient.GetQueueReference("newsqueue");
         }
 
     }
