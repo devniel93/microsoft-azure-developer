@@ -123,8 +123,85 @@ dotnet build
 3. Obtener cadena de conexion
 az storage account show-connection-string --name <name> --resource-group learn-c76a479f-113b-405d-9344-c20569ee167e
 
-Reeamplzar el parametro name con el nombre del storageaccount creado
+Remplazar el parametro name con el nombre del storageaccount creado
 
 4. Crear una variable con la cadena de conexion en la clase Program.cs
 private const string ConnectionString = "DefaultEndpointsProtocol=https; ...";
+
+#########
+
+Biblioteca cliente de Azure Storage para .NET
+Proporciona tipos para representar cada uno de los objetos:
+- CloudStorageAccount representa la cuenta de Azure Storage.
+- CloudQueueClient representa Azure Queue Storage.
+- CloudQueue representa una de las instancias de la cola.
+- CloudQueueMessage representa un mensaje.
+
+- Para crear una cola debe tener permisos de Write o Create para que el 
+objeto CloudStorageAccount pueda usar esta API.
+- Para el envio de mensaje, puede tener un size de hasta 64KB (48KB si
+codifica en Base64). Si se necesita una carga mayor puede combinar colas 
+y blobs, pasando la dirección URL a los datos reales (almacenados como 
+un Blob) en el mensaje. Este enfoque permitirá poner en cola hasta 200 GB 
+para un solo elemento.
+
+########
+
+Adicion de un mensaje a la Cola
+
+1. Instala el pquete WindowsAzure.Storage
+
+dotnet add package WindowsAzure.Storage
+
+2. Editar el archivo Program.cs
+static async Task SendArticleAsync(string newsMessage)
+{
+    CloudStorageAccount storageAccount = CloudStorageAccount.Parse(ConnectionString);
+
+    CloudQueueClient queueClient = storageAccount.CreateCloudQueueClient();
+
+    CloudQueue queue = queueClient.GetQueueReference("newsqueue");
+    bool createdQueue = await queue.CreateIfNotExistsAsync();
+    if (createdQueue)
+    {
+        Console.WriteLine("The queue of news articles was created.");
+    }
+
+    CloudQueueMessage articleMessage = new CloudQueueMessage(newsMessage);
+    await queue.AddMessageAsync(articleMessage);
+}
+
+3. Ejecutar build
+dotnet build
+
+4. Adicionar codigo para enviar un mensaje
+
+Editar el metodo Main:
+static void Main(string[] args)
+{
+    if (args.Length > 0)
+    {
+        string value = String.Join(" ", args);
+        SendArticleAsync(value).Wait();
+        Console.WriteLine($"Sent: {value}");
+    }
+}
+
+Se puede usar Async editando de la siguiente forma. Se requiere C# a 
+partir de la version 7.1
+static async Task Main(string[] args)
+{
+    if (args.Length > 0)
+    {
+        string value = String.Join(" ", args);
+        await SendArticleAsync(value);
+        Console.WriteLine($"Sent: {value}");
+    }
+}
+
+5. Ejecutar la aplicacion para enviar mensaje a la cola
+dotnet run Send this message
+
+6. Comprobar mensaje en la cola por Azure Portal o Azure CLI ejecutando:
+az storage message peek --queue-name newsqueue --connection-string "<connection-string>"
 
