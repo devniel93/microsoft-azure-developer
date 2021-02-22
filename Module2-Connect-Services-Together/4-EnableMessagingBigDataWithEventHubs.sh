@@ -155,3 +155,63 @@ storage account show-connection-string
 
 - Para crear un contenedor en una cuenta de almacenamiento.
 storage container create	
+
+##########
+
+Pasos para configurar aplicaciones de envio y recepcion de mensajes 
+mediante un Event Hub
+
+1. Crear un storage account estandar de uso general
+
+STORAGE_NAME=storagename$RANDOM
+az storage account create --name $STORAGE_NAME --sku Standard_RAGRS --encryption-service blob
+
+2. Obtener cadenas de conexion del storage account
+az storage account keys list --account-name $STORAGE_NAME
+$KEY1_STG
+$KEY2_STG
+
+az storage account show-connection-string -n $STORAGE_NAME
+$STG_CONNECTION_STRING
+
+3. Crear contenedor en el storage account
+az storage container create --name messages --connection-string "$STG_CONNECTION_STRING"
+
+4. Clonar repo de ejemplo con las aplicaciones de envio y recepcion
+git clone https://github.com/Azure/azure-event-hubs.git
+
+5. Editar las cadenas de conexion en 
+cd ~/azure-event-hubs/samples/Java/Basic/SimpleSend
+
+final ConnectionStringBuilder connStr = new ConnectionStringBuilder()
+                .setNamespaceName("ehubns-16009") // to target National clouds - use .setEndpoint(URI)
+                .setEventHubName("hubname-11926")
+                .setSasKeyName("RootManageSharedAccessKey")
+                .setSasKey("...");
+
+6. Compilar aplicacion maven java
+cd ~/azure-event-hubs/samples/Java/Basic/SimpleSend
+mvn clean package -DskipTests
+
+7. Editar las cadenas de conexion en 
+cd ~/azure-event-hubs/samples/Java/Basic/EventProcessorSample/src/main/java/com/microsoft/azure/eventhubs/samples/eventprocessorsample
+String consumerGroupName = "$Default";
+    	String namespaceName = "ehubns-16009";
+    	String eventHubName = "hubname-11926";
+    	String sasKeyName = "RootManageSharedAccessKey";
+    	String sasKey = "FiKc...";
+    	String storageConnectionString = "DefaultEndpointsProtocol...";
+    	String storageContainerName = "messages";
+    	String hostNamePrefix = "storagename7480";
+
+8. Compilar aplicacion maven java
+cd ~/azure-event-hubs/samples/Java/Basic/EventProcessorSample
+mvn clean package -DskipTests
+
+9. Ejecutar las aplicacion de envio al Event Hub
+cd ~/azure-event-hubs/samples/Java/Basic/SimpleSend
+java -jar ./target/simplesend-1.0.0-jar-with-dependencies.jar
+
+10. Ejecuta la aplicacion de recepcion de mensajes
+cd ~/azure-event-hubs/samples/Java/Basic/EventProcessorSample
+java -jar ./target/eventprocessorsample-1.0.0-jar-with-dependencies.jar
