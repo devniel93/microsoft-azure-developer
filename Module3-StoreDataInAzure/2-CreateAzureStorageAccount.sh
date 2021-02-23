@@ -59,3 +59,58 @@ frecuente y el rendimiento Premium aumentan el costo de los blobs.
 Para reducir los costos, puede usar varias cuentas de almacenamiento. Por 
 ejemplo, puede dividir los datos en dos categorías: críticos y no críticos.
 
+#########
+
+Elección de la configuración de la cuenta
+
+Las tres opciones de configuración que se aplican a la cuenta afectan
+a la manera  de administrar la cuenta y al costo de los servicios 
+que incluye:
+
+Nombre: 
+Cada cuenta de almacenamiento tiene un nombre. El nombre debe ser único 
+de forma global dentro de Azure, usar solo números y letras minúsculas, 
+y debe tener entre 3 y 24 caracteres.
+
+Modelo de implementación:
+Es el sistema que Azure utiliza para organizar los recursos.
+Azure proporciona dos modelos de implementación:
+- Resource Manager: modelo actual que usa Azure Resource Manager API.
+- Clásico: oferta heredada que usa Azure Service Management API.
+
+La característica clave que distingue a uno del otro reside en la 
+compatibilidad con las agrupaciones. El modelo de Resource Manager 
+agrega el concepto de grupo de recursos
+
+Tipo de cuenta
+- StorageV2 (v2 de uso general): oferta actual, compatible con todos 
+los tipos de almacenamiento y las características más recientes.
+- Storage (uso general v1): tipo heredado que admite todos los tipos de 
+almacenamiento, pero es posible que no todas las características.
+- Blob Storage: tipo heredado que solo permite blobs en bloques y blobs 
+en anexos.
+
+Microsoft recomienda el uso de la opción V2 de uso general para las 
+cuentas de almacenamiento nuevas.
+
+##########
+
+Elección de una herramienta de creación de cuentas
+
+Las herramientas disponibles son las siguientes:
+Azure Portal
+CLI de Azure (interfaz de la línea de comandos)
+Azure PowerShell
+Bibliotecas cliente de administración
+
+Elección de la herramienta
+Las cuentas de almacenamiento se suelen basar en un análisis de los 
+datos. En consecuencia, la creación de cuentas de almacenamiento suele 
+ser una operación única que se realiza al principio del proyecto. Para 
+las actividades que se realizan una sola vez, el portal es la opción 
+más utilizada.
+En los casos excepcionales que requieran automatización, se elige entre 
+una API de programación o una solución de scripting. En general, los 
+scripts se crean más rápidamente y se mantienen más fácilmente, ya que 
+no requieren entorno de desarrollo integrado, paquetes NuGet ni pasos 
+de compilación. 
