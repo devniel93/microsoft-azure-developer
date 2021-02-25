@@ -17,3 +17,29 @@ Para acceder a los datos Azure brinda varias opciones, una de las cuales es el c
 Se puede auditar a través de Storage Analytics, el cual registra cada operación en tiempo real.
 
 ---
+
+# Información sobre las claves de cuenta de almacenamiento
+Las cuentas de Azure Storage pueden crear aplicaciones autorizadas en Active Directory para controlar el acceso a los datos de blobs y colas. Para otros modelos de almacenamiento, se pueden usar una clave compartida, la cual se inserta en la cabecera de una solicitud HTTP llamando _Authorization_ 
+
+Por ejemplo, una solicitud GET
+```
+GET http://myaccount.blob.core.windows.net/?restype=service&comp=stats
+```
+
+Su encabezado incluiría la clave codificada:
+```
+x-ms-version: 2018-03-28  
+Date: Wed, 23 Oct 2018 21:00:44 GMT  
+Authorization: SharedKey myaccount:CY1OP3O3jGFpYFbTCBimLn0Xov0vt0khH/E5Gy0fXvg=
+```
+
+## _Claves de Storage Account_
+Azure crea dos claves (principal y secundaria) para cada cuenta de almacenamiento que se crea, las cuales dan acceso a todo lo que hay en la cuenta. 
+
+## _Protección de claves compartidas_
+Storage account solo tiene dos claves que dan acceso completo a la cuenta y se debe usar solamente para aplicaciones internas de confianza.
+Si las claves se comprometen, se debe cambiar los valores de clave en Azure Portal.
+
+Para actualizar claves:
+- Cambiar cada aplicación de confianza para usar la clave secundaria.
+- Actualizar la clave principal en Azure Portal. Considerar como el nuevo valor de clave secundaria.
