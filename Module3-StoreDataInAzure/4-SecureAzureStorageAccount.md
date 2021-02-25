@@ -43,3 +43,12 @@ Si las claves se comprometen, se debe cambiar los valores de clave en Azure Port
 Para actualizar claves:
 - Cambiar cada aplicación de confianza para usar la clave secundaria.
 - Actualizar la clave principal en Azure Portal. Considerar como el nuevo valor de clave secundaria.
+
+---
+
+# Descripcion de Firma de acceso compartido (SAS)
+Se recomienda no compartir claves de cuenta de almacenamiento con aplicaciones de terceros externas. En el caso de los clientes que no son de confianza, se debe usar una firma de acceso compartido (SAS), el cual es una cadena que contiene un token de seguridad que se puede asociar a un URI. SAS permite delegar el acceso a objetos de almacenamiento y especificar restricciones, como los permisos y el intervalo de tiempo de acceso.
+
+## _Tipos de firmas de acceso compartido_
+- SAS de nivel de servicio: Permite el acceso a recursos específicos de una cuenta de almacenamiento.
+- SAS de nivel de cuenta: permite todo lo que permite SAS nivel de servicio mas otros recursos y capacidades como la creación de sistemas de archivos. 
