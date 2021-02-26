@@ -70,3 +70,9 @@ Cuando se producen anomalías, Azure envia una notificacion por correo con infor
 
 Las alertas de seguridad se pueden revisar y administrar a través del Azure Security Center.
 
+## _Exploración de las características de seguridad de Azure Data Lake Storage_
+Azure Data Lake Storage Gen2 proporciona una solución de Data Lake que se base en Azure Blob Storage con las mismas características de seguridad antes descritas. Autentica mediante tokens de portador de Azure Active Directory OAuth 2.0, lo cual permite esquemas de autenticación flexibles, lo que incluye la federación con Azure AD Connect y la autenticación multifactor, que proporciona una protección más potente que las simples contraseñas.
+
+Lo más importante es que estos esquemas de autenticación están integrados en los servicios de análisis principales como Azure Databricks, HDInsight y Azure Synapse Analytics.
+
+El cifrado de datos de un extremo a otro de Azure Storage y las protecciones de capa de transporte completan el escudo de seguridad del data lake.
