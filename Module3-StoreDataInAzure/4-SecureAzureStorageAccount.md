@@ -52,3 +52,9 @@ Se recomienda no compartir claves de cuenta de almacenamiento con aplicaciones d
 ## _Tipos de firmas de acceso compartido_
 - SAS de nivel de servicio: Permite el acceso a recursos específicos de una cuenta de almacenamiento.
 - SAS de nivel de cuenta: permite todo lo que permite SAS nivel de servicio mas otros recursos y capacidades como la creación de sistemas de archivos. 
+
+---
+
+# Control de acceso de red a la cuenta de almacenamiento
+De forma predeterminada, los Storage Accounts aceptan conexiones de clientes en cualquier red. Para limitar el acceso a redes seleccionadas, primero se debe cambiar la configuración predeterminada para restringir el acceso a determinadas direcciones IP, intervalos o redes virtuales.
+
