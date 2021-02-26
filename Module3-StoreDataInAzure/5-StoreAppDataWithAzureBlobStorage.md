@@ -11,3 +11,20 @@ Los blobs no son adecuados para datos estructurados porque su latencia es mayor 
 En el Blob Storage, los blobs se encuentran dentro de un contenedor de blobs. Un Storage account puede almacenar blobs ilimitados en un contenedor y tener un número ilimitado de contenedores. 
 
 Los contenedores y blobs admiten metadatos en format de pares de cadena clave-valor, lo que sirve para tener una descripción del blob por ejemplo.
+
+---
+
+# Diseño de una estrategia de organización de almacenamiento
+Al diseñar una aplicación que necesita almacenar los datos, es importante pensar en cómo la aplicación va a organizarlos en blobs, contenedores y cuentas de almacenamiento.
+
+## _Cuentas de almacenamiento_
+Usar una sola Storage Account puede ser suficiente para organizar blobs como se desee pero se debería usar más cuentas de almacenamiento para separar costos y controlar el accesos.
+
+## _Limitaciones sobre nomenclatura_
+Los nombres de contenedores y blobs deben seguir una serie de reglas, como las limitaciones de longitud y las restricciones de caracteres.
+
+## _Acceso público y contenedores como límites de seguridad_
+De forma predeterminada, todos los blobs requieren autenticación para acceder. Sin embargo, los contenedores individuales pueden configurarse para permitir la descarga pública de sus blobs sin autenticación. Los blobs de un contenedor configurado con acceso público los puede descargar cualquier persona que conozca las URL de almacenamiento sin ningún tipo de autenticación o auditoría. No se debe colcar los datos de blob en un contenedor público si no se desea compartirlos públicamente.
+
+
+
