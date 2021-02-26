@@ -58,3 +58,15 @@ Se recomienda no compartir claves de cuenta de almacenamiento con aplicaciones d
 # Control de acceso de red a la cuenta de almacenamiento
 De forma predeterminada, los Storage Accounts aceptan conexiones de clientes en cualquier red. Para limitar el acceso a redes seleccionadas, primero se debe cambiar la configuración predeterminada para restringir el acceso a determinadas direcciones IP, intervalos o redes virtuales.
 
+--- 
+
+# Información sobre Advanced Threat Protection para Azure Storage
+Azure Defender for Storage proporciona una capa adicional de inteligencia de seguridad que detecta intentos inusuales y potencialmente dañinos de acceso Storage Accounts o de aprovechar sus vulnerabilidades. Las alertas de seguridad se desencadenan cuando se producen anomalías en una actividad y se integran en Azure Security Center, son enviados por correo electrónico a los administradores de las suscripciones.
+
+Azure Defender for Storage proporciona una capa adicional de inteligencia de seguridad que detecta intentos inusuales y potencialmente dañinos de acceso Storage Accounts o de aprovechar sus vulnerabilidades. 
+
+## _Exploración de anomalías de seguridad_
+Cuando se producen anomalías, Azure envia una notificacion por correo con información del evento sospechoso que incluye detalles como la naturaleza, nombre del storage account, hora, tipo, posibles causas, pasos para la corrección y otros.
+
+Las alertas de seguridad se pueden revisar y administrar a través del Azure Security Center.
+
