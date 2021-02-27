@@ -50,3 +50,48 @@ Las VMs se comunican con recursos externos mediante una VNet, el cual representa
 
 ### Planificación de una red
 Es mejor planear la red virtual antes de la creacion de la VM. 
+
+--- 
+
+# Decisión de un método de autenticación de SSH
+Para acceder remotamente a las VM se puede usar SSH.
+
+## _¿Qué es SSH?_
+Secure Shell (SSH) es un protocolo de conexión cifrada que permite inicios de sesión seguros a través de conexiones no seguras. SSH permite conectarse a un shell de terminal desde una ubicación remota mediante una conexión de red.
+Para autenticar una conexion por SSH se puede usar 2 metodos:
+- Username y password: No recomendado por vulnerabilidad ante ataque fuerza bruta.
+- Par de claves SSH: Seguro y preferible metodo de autenticacion.
+
+Un Par de claces consiste en una clave publica y otra clave privada.
+- La clave pública se coloca en la máquina virtual Linux o en cualquier otro servicio que se quiera usar con una criptografía de clave pública. Se puede compartir con cualquiera.
+- La clave privada es la que se presenta para verificar la identidad en la máquina virtual Linux al crear una conexión SSH. Considere que es información confidencial y protéjala como si fuera una contraseña o cualquier otro dato privado.
+
+## _Creación del par de claves SSH_
+Se puede usar el comando ssh-keygen integrado para generar los archivos de clave pública y privada SSH.
+
+1. Ejecutar el comando para gneerar el par de claves con protocolo SSH 2.
+```
+ssh-keygen -m PEM -t rsa -b 4096
+```
+
+2. Presionar enter para aceptar la ubicacion y se creara dos archivos `id_rsa` e `id_rsa.pub`, en el directorio `~/.ssh`
+
+3. Escribir y confirmar una frase de contraseña de clave privada
+devniel93
+
+### Frase de contraseña de clave privada
+Se usa para acceder al archivo de claves SSH privado y no es la contraseña de la cuenta de usuario. Cuando se agrega una frase de contraseña a la clave SSH, cifra la clave privada mediante AES de 128 bits para que la clave privada no se pueda usar sin la frase de contraseña para descifrarla.
+
+Es recomendable agregrar una frase de contraseña ya que si un atacante robara la clave privada y esta no tuviera una frase de contraseña, podría usarla para iniciar sesión en los servidores que tuvieran la clave pública correspondiente. 
+
+### Usar el par de claves SSH con una máquina virtual Linux de Azure
+Para ver el contenido de la clave publica
+```
+cat ~/.ssh/id_rsa.pub
+```
+
+### Adición de la clave SSH a una máquina virtual Linux existente
+Se puede instalar la clave publica en una VM con el siguiente comando, donde _myserver_ es la VM y _azureuser_ es el usuario.
+```
+ssh-copy-id -i ~/.ssh/id_rsa.pub azureuser@myserver
+```
