@@ -102,3 +102,21 @@ Es el modelo de almacenamiento de disco recomendado más reciente. Solucionan de
 
 ## _Selección de un sistema operativo_
 Azure proporciona diversas imágenes de sistema operativo que se pueden instalar en la máquina virtual, incluidas varias versiones de Windows y tipos de Linux. Se puede buscar en Azure Marketplace imágenes de instalación más sofisticadas que incluyan el sistema operativo y las herramientas de software más conocidas instaladas para escenarios específicos.
+
+--- 
+
+# Creación de una máquina virtual desde Azure Portal
+
+## _Azure Portal_
+Para este ejemplo se usan los siguientes pasos:
+1. Inicia sesion en portal.azure.com
+2. Seleccionar _Create new resource_ > Compute > Virtual Machine
+3. Seleccionar suscripcion, resource group, ingrsar nombre, region.
+4. Seleccionar como imagen Servidor de Ubuntu 18.04 LTS
+5. En Size Seleccionar Standar DS2 V3
+6. Tipo de autenticacion: Password.
+7. Ingresar username y password.
+admindevniel93
+AdminDevniel93
+8. Seleccionar _Review and create_
+9. Por ultimo, seleccionar _Create_
