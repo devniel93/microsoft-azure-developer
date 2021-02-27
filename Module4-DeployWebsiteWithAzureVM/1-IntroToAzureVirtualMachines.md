@@ -260,3 +260,44 @@ Es un grupo logica de hardware que puede someterse a mantenimiento o reiniciarse
 Se puede replicar la infraestructura en varios sitios para controlar la conmutacion por error regional. Se puede usar el servicio de `Azure Site Recovery` para replicar cargas de trabajo hacia una ubicacion secundaria. Usando este servicio se puede logar 2 ventajas:
 - Permite el uso de Azure como destino de recuperacion, eliminando costos y complejidad de mantener un centro de datos fisico secundario.
 - Hace sencillo probar las conmutaciones por error para pruebas de recuperacion sin afectar entornos productivos.
+
+---
+
+# Copia de seguridad de las máquinas virtuales
+Se puede usar el servicio de `Azure Backup` para realizar copias de seguridad para proteger VMs fisicas o virtuales sea local o en la nube. Se puede usar este eservicio en diferentes escenarios como los siguientes:
+- Archivos y carpetas en máquinas con sistemas operativos de Windows (físicas o virtuales, locales o en la nube)
+- Instantáneas basadas en aplicaciones (Servicio de instantáneas de volumen)
+- Cargas de trabajo conocidas de Microsoft como Microsoft SQL Server, Microsoft SharePoint y Microsoft Exchange
+- Soporte nativo para instancias de Azure Virtual Machines en Windows y Linux
+- Máquinas cliente de Linux y Windows 10
+
+## _Ventajas del uso de Azure Backup_
+- Administración automática del almacenamiento: 
+Asigna y administra automáticamente almacenamiento de copia de seguridad y emplea un modelo de pago por uso.
+
+- Escalado ilimitado: 
+Usa la eficacia y escalabilidad de Azure para ofrecer alta disponibilidad.
+
+- Varias opciones de almacenamiento: 
+Ofrece un almacenamiento con redundancia local en el que todas las copias de datos existen dentro de la misma región y un almacenamiento con redundancia geográfica en el que los datos se replican en una región secundaria.
+
+- Transferencia de datos ilimitada: 
+No limita la cantidad de datos de entrada y salida que se transfieren. Tampoco cobra por los datos que se transfieren.
+
+- Cifrado de datos:
+Permite la transmisión y el almacenamiento seguros de los datos en Azure.
+
+Copia de seguridad coherente con la aplicación: 
+- Significa que un punto de recuperación tiene todos los datos necesarios para restaurar la copia de seguridad.
+
+- Retención a largo plazo: 
+Azure no limita la duración del tiempo que puede conservar los datos de copia de seguridad.
+
+## _Uso de Azure Backup_
+Azure Backup utiliza varios componentes que se pueden descargar e instalar en cada VM que se quiera realizar una copia de seguridad:
+- Agente de Azure Backup
+- System Center Data Protection Manager
+- Azure Backup Server
+- Extensión de máquina virtual de Azure Backup
+
+Azure Backup usa un almacen de Recovery Services donde almacena las copias de seguridad, el cual esta en blobs de Azure Storage. Con este almacen implementado se pueden definir directivas para establecer cuando se toman las instantaneas y durante cuanto tiempo se deben almacenar.
