@@ -89,9 +89,68 @@ Para ver el contenido de la clave publica
 ```
 cat ~/.ssh/id_rsa.pub
 ```
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC80SSgshKsWr7g4lB+OFeG101CYh5JB9kiUL6ZnbB6YMSP0LGWRdg/ijWO+3KOUi3WM1D+ofy7YzcxLCXC+Gs+Dsu95hAj6sXZh5WmTExaEt1+DemGwlNaBXMIZ6tpVsFQm9MrYaWL+/B4VwFcerWys3brWenNcpTtPgJRZtI+7D0Cfcxd7JxcxP4kyCZ4ImFad0I2WnsMMR029XBRIHVbw4Rvi3SbSjTMXW+PtNlzib1BMrKYF4oL7PL2eRxXruPILEy/qHWa21b4lQC+8M/vKfL/qYBPQ5h6q0AaUaneQ1AVVZoY72kkVfFbOejiL8V+xyik96J0bWudY9z6i5QF4MAAbPtzcOaFS6Lx8U7IwRbpPjoHH3NjyZhjBzFPeRXOHlz8vtV8V4PNZ7nZTPBtTwxYWJsmCKJL50pxjp5bmf22wPSs4dpKyR9XTmgEbYjdYGpFCzvZrUE49Y8JpT57gMiaDqaxQXWsQGOK8zQL+R+dhsx1v8z4s/DvLpuuUkzQjcFv6muGZv04L6AkxLGsLZGod+lSxjGKEjfWmQDpzVQLflrJOa6ztcbCqCWUQgjl/n1dXaq506CdhP+rsQzOyWB6kS4CwsCl+iAddok2P/t+ktWmsOLGVhknl86KgjBURsw4cnwjkq8MkU14wICyWJgVqB6Hy0kyJzJTn0Ucpw== danielolanoburga@cc-732e18ea-6d498bb946-lhf75
 
 ### Adición de la clave SSH a una máquina virtual Linux existente
 Se puede instalar la clave publica en una VM con el siguiente comando, donde _myserver_ es la VM y _azureuser_ es el usuario.
 ```
 ssh-copy-id -i ~/.ssh/id_rsa.pub azureuser@myserver
+```
+
+---
+
+# Opciones SSH y direcciones IP de las máquinas virtuales de Azure
+A menos que haya configurado una VPN de sitio a sitio en Azure, las máquinas virtuales de Azure no serán accesibles desde la red local.
+
+## _Direcciones IP de las máquinas virtuales de Azure_
+Las VM se comunican mediante red virtual y pueden tener una IP puiblica, el cual permite interacctuar a traves de internet. Alternativamente, se puede configurar una VPN para conectar la red local a Azure sin necesidad de exponer una IP publica. 
+
+Las IP publicas se asignan dinamicamente, es decir que pueden cambiar con el tiempo o cuando se reinicia la VM. Si se requiere una IP publica estatica se paga msa.
+
+## _Conexión a la máquina virtual con SSH_
+Para conectarse a la máquina virtual a través de SSH, necesita lo siguiente:
+
+- la dirección IP pública de la máquina virtual
+- el nombre de usuario de la cuenta local en la máquina virtual
+- una clave pública configurada en esa cuenta
+- acceso a la clave privada correspondiente
+- el puerto 22 abierto en la máquina virtual
+
+1. Para conectarse, se puede obtener el comando desde Azure Portal > Connect > SSH
+```
+ssh azureuser@13.68.150.164
+```
+2. Para obtener una lista de todos los dispositivos de bloque, donde se ve las unidades de disco
+Ejecutar `lsblk`
+
+3. Para inicialiar o montar una unidad de datos en el sistema de archivos
+Ejecutar lo siguinete para especificar el disco que crear una nueva particion principal:
+```
+(echo n; echo p; echo 1; echo ; echo ; echo w) | sudo fdisk /dev/sdc
+```
+
+4. Escribir un sistema de archivo en la particion:
+```
+sudo mkfs -t ext4 /dev/sdc1
+```
+
+5. Montar la unidad en el sistema de archivos y creacion de una carpeta como punto de montaje
+```
+sudo mkdir /data && sudo mount /dev/sdc1 /data
+```
+
+## _Instalación de un software: Servidor web Apache_
+1. Actualizar el indice de paquetes local
+```
+sudo apt-get update
+```
+
+2. Instalar Apache
+```
+sudo apt-get install apache2 -y
+```
+
+3. Iniciar de foma automatica
+```
+sudo systemctl status apache2 --no-pager
 ```
