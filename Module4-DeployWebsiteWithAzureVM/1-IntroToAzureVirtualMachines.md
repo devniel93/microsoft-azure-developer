@@ -120,3 +120,117 @@ admindevniel93
 AdminDevniel93
 8. Seleccionar _Review and create_
 9. Por ultimo, seleccionar _Create_
+
+## _Descripción de las opciones disponibles para crear y administrar una máquina virtual de Azure_
+
+Existen otras formas de crear una maquina virtual en Azure:
+- Azure Resource Manager
+- Azure PowerShell
+- Azure CLI
+- API REST de Azure
+- SDK de cliente de Azure
+- Extensiones de máquina virtual de Azure
+- Servicios de Azure Automation
+
+### Azure Resource Manager
+Aumenta la eficacia de la creacion de una VM al organizar en grupos los recursos que con llevan crear una VM como el almacenamiento y la interfaz de red. Resource Manager permite crear _templates_ que se pueden usar para implementar configuraciones especificas.
+
+Los _templates_ de Resource Manager (ARM) son archivos JSON donde se definen los recursos que se necesitan para implementar una solucion. Se puede crear una plantilla desde la seccion del VM > _Automation_ > _Export template_
+
+### Azure PowerShell
+Crear scripts de administracion es una manera eficaz de optimizar el trabajo. Se pueden crear scripts para automatizar tareas repetitivas. Azure PowerShell permite realizar estos scrpts mediante los comandos cmdlets.
+
+Por ejemplo, para crear una VM con Azure PowerShell:
+```
+New-AzVm `
+    -ResourceGroupName "TestResourceGroup" `
+    -Name "test-wp1-eus-vm" `
+    -Location "East US" `
+    -VirtualNetworkName "test-wp1-eus-network" `
+    -SubnetName "default" `
+    -SecurityGroupName "test-wp1-eus-nsg" `
+    -PublicIpAddressName "test-wp1-eus-pubip" `
+    -OpenPorts 80,3389
+```
+
+### CLI de Azure
+Es otra opcion de Azure para crear scripts por lineas de comandos que permite administrar recursos de Azure como VMs y discos. Disponible en MAC, Windows, Linux o en el explorador con Cloud Shell. A diferencia de Azure PowerShell, Azure CLI no necesita PowerShell. Normalmente se usa en maquinas no Windows o en las que el desarrollador no esta familiarizado con PowerShell.
+
+Por ejemplo, para crear una VM con Azure CLI:
+```
+az vm create \
+    --resource-group TestResourceGroup \
+    --name test-wp1-eus-vm \
+    --image win2016datacenter \
+    --admin-username jonc \
+    --admin-password aReallyGoodPasswordHere
+```
+
+### Mediante programación (API)
+
+#### API REST de Azure
+Ofrece a los desarrolladores operaciones hacia recursos, en donde las operacioenes se exponen como URIs con los metodos HTTP.
+Con esta API, dispone de operaciones para:
+- Crear y administrar conjuntos de disponibilidad
+- Agregar y administrar extensiones de máquinas virtuales
+- Crear y administrar discos administrados, instantáneas e imágenes
+- Acceder a las imágenes de plataforma disponibles en Azure
+- Recuperar la información de uso de los recursos
+- Crear y administrar máquinas virtuales
+- Crear y administrar conjuntos de escalado de máquinas virtuales
+
+#### SDK de cliente de Azure
+El SDK encapsula la API REST de Azure y esta disponible en varios lenguajes como .NET, C#, Java, NodeJS y otros.
+
+Por ejemplo, para crear una VM por medio del paquete NuGet `Microsoft.Azure.Management.Fluent`:
+```
+var azure = Azure
+    .Configure()
+    .WithLogLevel(HttpLoggingDelegatingHandler.Level.Basic)
+    .Authenticate(credentials)
+    .WithDefaultSubscription();
+// ...
+var vmName = "test-wp1-eus-vm";
+
+azure.VirtualMachines.Define(vmName)
+    .WithRegion(Region.USEast)
+    .WithExistingResourceGroup("TestResourceGroup")
+    .WithExistingPrimaryNetworkInterface(networkInterface)
+    .WithLatestWindowsImage("MicrosoftWindowsServer", "WindowsServer", "2012-R2-Datacenter")
+    .WithAdminUsername("jonc")
+    .WithAdminPassword("aReallyGoodPasswordHere")
+    .WithComputerName(vmName)
+    .WithSize(VirtualMachineSizeTypes.StandardDS1)
+    .Create();
+```
+
+El mismo ejemplo pero con el SDK de Java:
+```
+String vmName = "test-wp1-eus-vm";
+// ...
+VirtualMachine virtualMachine = azure.virtualMachines()
+    .define(vmName)
+    .withRegion(Region.US_EAST)
+    .withExistingResourceGroup("TestResourceGroup")
+    .withExistingPrimaryNetworkInterface(networkInterface)
+    .withLatestWindowsImage("MicrosoftWindowsServer", "WindowsServer", "2012-R2-Datacenter")
+    .withAdminUsername("jonc")
+    .withAdminPassword("aReallyGoodPasswordHere")
+    .withComputerName(vmName)
+    .withSize("Standard_DS1")
+    .create();
+```
+
+#### Extensiones de máquina virtual de Azure
+Sirve para configurar e instalar software adicional en la VM despues de la implementacion incial. Las extensiones de VM se pueden ejecutar por Azure CLI, PowerShell, templates de ARM y Azure Portal.
+
+#### Servicios de Azure Automation
+Permite integrar servicios que, a su vez, permiten automatizar tareas de administración frecuentes, lentas y propensas a errores con facilidad. Entre estos servicios se incluyen los siguientes:
+- Automatización de procesos:
+Se puede automatizar el proceso que pueda dar respuesta a eventos que se pueden productir en una VM como errores especificos.
+
+- Administración de configuración:
+Se puede realizar seguimiento de actualizaciones de software disponibles para el SO de una VM y actuar segun lo necesario. Por medio de _Microsoft Endpoint Configuration Manager_ se puede administrar el equipo, los servidores y dispositivos moviles. Tambien, se puede amplicar esta compatibilidad con _Azure Configuration Manager_
+
+- Administración de actualizaciones:
+Se usa para administrar actualizaciones y revisiones de las VMs. uede evaluar rápidamente el estado de las actualizaciones disponibles, programar la instalación y revisar los resultados de la implementación para comprobar si las actualizaciones se aplicaron correctamente. Se puede habilitar en una VM desde la cuenta de _Azure Automation_.
