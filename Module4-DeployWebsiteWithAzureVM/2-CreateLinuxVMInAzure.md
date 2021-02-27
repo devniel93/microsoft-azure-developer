@@ -154,3 +154,26 @@ sudo apt-get install apache2 -y
 ```
 sudo systemctl status apache2 --no-pager
 ```
+
+---
+
+# Configuración de red y seguridad
+Se puede modificar la configuración, administrar redes, abrir o bloquear el tráfico y mucho más mediante Azure Portal, la CLI de Azure o las herramientas de Azure PowerShell.
+
+## _Apertura de puertos en máquinas virtuales de Azure_
+De forma predeterminada, las nuevas VMs están bloqueadas. Las aplicaciones pueden realizar solicitudes salientes pero trafico entrantes solo se prmite desde la red virtual y desde Azure Load Balancer. Hay 2 pasos para adminitir distintos protocolos de red:
+- Crear un grupo de seguridad de red.
+- Crear una regla de entrada que permita el tráfico con los puertos que se necesitan.
+
+### ¿Qué es un grupo de seguridad de red?
+Son la principal herramienta para aplicar y controlar las reglas de tráfico de red en el nivel de red. Proporciona un firewall de software gracias al filtrado del tráfico entrante y saliente de la red virtual. Se pueden asociar a una interfaz de red (para reglas por host), una subred de la red virtual (para aplicar a varios recursos) o a ambos niveles.
+
+#### Reglas del grupo de seguridad
+Los NSG usan reglas para permitir o denegar el movimiento del tráfico a través de la red. Cada regla identifica las direcciones de origen y destino (o rangos), el protocolo, el puerto (o rango), la dirección (entrante o saliente), una prioridad numérica y si desea permitir o denegar el tráfico que coincide con la regla.
+
+#### Uso de las reglas de red por parte de Azure
+Para el tráfico entrante, Azure procesa el grupo de seguridad asociado a la subred y, después, el grupo de seguridad que se aplica a la interfaz de red. El tráfico saliente se controla en orden inverso (la interfaz de red en primer lugar, seguida de la subred).
+
+Las reglas se evalúan en orden de prioridad, comenzando por la regla de prioridad más baja. Las reglas de denegación siempre detienen la evaluación. 
+
+La última regla es siempre una regla de Denegar todo. Se trata de una regla predeterminada que se agrega a todos los grupos de seguridad para el tráfico entrante y saliente con una prioridad de 65500. Para que el tráfico pase por el grupo de seguridad, debe tener una regla de permiso o la regla final predeterminada lo bloqueará.
