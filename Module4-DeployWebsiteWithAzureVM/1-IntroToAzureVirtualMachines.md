@@ -234,3 +234,29 @@ Se puede realizar seguimiento de actualizaciones de software disponibles para el
 
 - Administración de actualizaciones:
 Se usa para administrar actualizaciones y revisiones de las VMs. uede evaluar rápidamente el estado de las actualizaciones disponibles, programar la instalación y revisar los resultados de la implementación para comprobar si las actualizaciones se aplicaron correctamente. Se puede habilitar en una VM desde la cuenta de _Azure Automation_.
+
+--- 
+
+# Administración de la disponibilidad de las máquinas virtuales de Azure
+
+## _¿Qué es la disponibilidad?_
+Es el porcentaje de tiempo que un servicio está disponible para su uso.
+
+## _¿Por qué es necesario pensar sobre la disponibilidad cuando se usa Azure?_
+Las VMs se ejecutan en servidores fisicos en el centro de datos de Azure, los cuales pueden producir error y afectan a las VMs. Si pasa esto, Azure mueve automaticamente la VM a un host correcto, pero esa migracion de reparacion puede demorar minutos en completarse. Tambien, las VMs pueden verse afectadas por actualizaciones de software o hardware y aunque normalmente no afectan directamente, pueden necesitar un reinicio para completar la actualizacion.
+
+Para garantizar que no se interrumpan los servicios, se recomienda tener al menos 2 instancias en un conjunto de disponibilidad.
+
+## _¿Qué es un conjunto de disponibilidad?_
+Un _Availiability Set_ sirve para que un grupo de VMs no esten sujetas a un unico punto de error y no se actualicen todas las vez. Las VMs de un conjunto de disponibilidad deben tener funcionalidades identicas y tener el mismo software instalado. Segun el SLA brindado por Microsoft es de 99.95% para VMs implementads en un conjunto de disponibilidad.
+
+### ¿Qué es un dominio de error?
+Es un grupo logico de hardware de Azure, considerado como un bastidor de un centro de datos. Las primeras 2 VM se aprovisionan en 2 bastidores diferentes para que, en caso de error de red o alimentcion en un bastidor, solo se afecte una VM.
+
+### ¿Qué es un dominio de actualización?
+Es un grupo logica de hardware que puede someterse a mantenimiento o reiniciarse al mismo tiempo. Azure coloca los conjuntos de disponibilidad en dominios de actualizacion para minimizar el impacto ante actualizaciones, procesado cada dominio de actualizacion de uno en uno.
+
+## _Conmutación por error entre ubicaciones_
+Se puede replicar la infraestructura en varios sitios para controlar la conmutacion por error regional. Se puede usar el servicio de `Azure Site Recovery` para replicar cargas de trabajo hacia una ubicacion secundaria. Usando este servicio se puede logar 2 ventajas:
+- Permite el uso de Azure como destino de recuperacion, eliminando costos y complejidad de mantener un centro de datos fisico secundario.
+- Hace sencillo probar las conmutaciones por error para pruebas de recuperacion sin afectar entornos productivos.
