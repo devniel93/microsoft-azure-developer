@@ -42,3 +42,39 @@ Es un entorno informático que combina una nube pública y una nube privada, lo 
 - Entorno operativo único: La nube pública no puede replicar el entorno operativo heredado.
 
 - Migración: Las cargas de trabajo se mueven a la nube a lo largo del tiempo.
+
+## _Modelos de servicio en la nube_
+
+Infraestructura como servicio (IaaS):
+proporciona la infraestructura informática instantánea que puede aprovisionar y administrar a través de Internet.
+
+- Plataforma como servicio (PaaS):
+proporciona entornos de desarrollo e implementación listos para usar que puede utilizar para proporcionar servicios en la nube propios.
+
+- Software como servicio (SaaS):
+proporciona aplicaciones a través de Internet como un servicio basado en web.
+
+### Infraestructura como servicio IaaS
+Es una infraestructura informática instantánea que se aprovisiona y administra a través de Internet. IaaS permite escalar rápidamente los recursos para satisfacer la demanda y pagar solo por lo que se usa. Evita el gasto y la complejidad que implica comprar y administrar sus propios servidores físicos y otra estructura de centro de datos.
+
+Escenarios comunes para usar IaaS:
+
+- Hospedaje de sitios web: Si quiere mayor control del hospedaje de un sitio web, ejecutar sitios web mediante IaaS puede ser una mejor opción que el hospedaje web tradicional.
+
+- Aplicaciones web: IaaS proporciona toda la infraestructura para admitir aplicaciones web, incluidos los servidores de aplicaciones, web y almacenamiento, además de los recursos de red. Las organizaciones pueden implementar rápidamente aplicaciones web en IaaS y escalar y reducir la infraestructura cuando no sea posible predecir la demanda de las aplicaciones.
+
+- Almacenamiento, copia de seguridad y recuperación: La administración de almacenamiento puede ser compleja y requerir una gran inversión de capital y personal capacitado para administrar los datos y cumplir los requisitos legales y de cumplimiento. IaaS puede ayudar a simplificar el planeamiento, la administración, las demandas impredecibles y las necesidades de almacenamiento en constante crecimiento.
+
+- Informática de alto rendimiento: Si tiene una carga de trabajo que requiere informática de alto rendimiento, puede ejecutarla en la nube para evitar el costo por adelantado del hardware y solo pagar por el uso cuando sea necesario.
+
+- Análisis de macrodatos: Si tiene conjuntos de datos de gran tamaño que contienen patrones, tendencias y asociaciones potencialmente útiles, IaaS puede proporcionar la capacidad de procesamiento para extraer conjuntos de datos con el fin de buscar patrones.
+
+Ventajas:
+
+- Elimina los gastos de capital y reduce los costos continuos: IaaS evita el gasto inicial de configurar y administrar un centro de datos in situ, por lo que es una opción económica para empresas emergentes y empresas que prueban ideas nuevas. 
+
+- Mejora la continuidad empresarial y la recuperación ante desastres: Gracias a los SLA, IaaS puede disminuir este costo y acceder a las aplicaciones y los datos como de costumbre durante un desastre o una interrupción.
+
+- Permite responder rápidamente a la cambiante situación empresarial: IaaS permite escalar verticalmente los recursos para dar cabida a los aumentos en la demanda de su aplicación y luego volver a reducirlos verticalmente cuando la actividad disminuye para ahorrar dinero. 
+
+- Permite aumentar la estabilidad, confiabilidad y compatibilidad: Con IaaS, no es necesario mantener ni actualizar hardware, ni tampoco solucionar problemas con los equipos. 
