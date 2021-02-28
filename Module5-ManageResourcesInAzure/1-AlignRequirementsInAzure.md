@@ -78,3 +78,23 @@ Ventajas:
 - Permite responder rápidamente a la cambiante situación empresarial: IaaS permite escalar verticalmente los recursos para dar cabida a los aumentos en la demanda de su aplicación y luego volver a reducirlos verticalmente cuando la actividad disminuye para ahorrar dinero. 
 
 - Permite aumentar la estabilidad, confiabilidad y compatibilidad: Con IaaS, no es necesario mantener ni actualizar hardware, ni tampoco solucionar problemas con los equipos. 
+
+### Plataforma como servicio PaaS
+Es un entorno completo de desarrollo e implementación en la nube. Con PaaS, puede compilar e implementar todo, desde aplicaciones sencillas basadas en la nube a aplicaciones empresariales sofisticadas y habilitadas para la nube. PaaS admite todo el ciclo de vida de una aplicación web: compilación, prueba, implementación, administración y actualización. PaaS elimina la necesidad de administrar las licencias de software, el software intermedio y la infraestructura de los servicios
+
+Escenarios comunes:
+- Marco de desarrollo: los desarrolladores pueden usan para desarrollar o personalizar aplicaciones basadas en la nube. Se incluyen características de la nube, como escalabilidad, alta disponibilidad y funcionalidad multiinquilino, lo que permite reducir la cantidad de codificación que deben realizar los desarrolladores.
+
+- Análisis o inteligencia empresarial: Las herramientas de análisis que se proporcionan como servicio permiten analizar y extraer datos. 
+
+Ventajas:
+
+- Menor tiempo de desarrollo: Las herramientas de desarrollo de PaaS pueden disminuir el tiempo de desarrollo de las aplicaciones nuevas. Los desarrolladores pueden usar componentes de aplicación codificados previamente e insertados en la plataforma. Pueden brindar al equipo de desarrollo funcionalidades nuevas sin que sea necesario agregar personal con las aptitudes necesarias.
+
+- Desarrollo para varias plataformas: Algunos proveedores de servicio ofrecen opciones de desarrollo para varias plataformas, como equipos de escritorio, dispositivos móviles y exploradores, que permite que desarrollar aplicaciones multiplataforma sea más rápido y sencillo.
+
+- Uso económico de herramientas sofisticadas: Un modelo de pago por uso permite que individuos u organizaciones usen sofisticadas herramientas de análisis e inteligencia empresarial y software de desarrollo que no podrían comprar directamente.
+
+- Compatibilidad con equipos de desarrollo distribuidos geográficamente: Como se accede por Internet al entorno de desarrollo, los equipos de desarrollo pueden trabajar conjuntamente en proyectos incluso cuando los miembros de los equipos se encuentran en ubicaciones remotas.
+
+- Administración eficaz del ciclo de vida de la aplicación: PaaS proporciona todas las funcionalidades necesarias para admitir todo el ciclo de vida de una aplicación web: compilación, prueba, implementación, administración y actualización dentro del mismo entorno integrado.
