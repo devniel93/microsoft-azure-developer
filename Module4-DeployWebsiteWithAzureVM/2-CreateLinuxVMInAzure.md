@@ -89,7 +89,6 @@ Para ver el contenido de la clave publica
 ```
 cat ~/.ssh/id_rsa.pub
 ```
-ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC80SSgshKsWr7g4lB+OFeG101CYh5JB9kiUL6ZnbB6YMSP0LGWRdg/ijWO+3KOUi3WM1D+ofy7YzcxLCXC+Gs+Dsu95hAj6sXZh5WmTExaEt1+DemGwlNaBXMIZ6tpVsFQm9MrYaWL+/B4VwFcerWys3brWenNcpTtPgJRZtI+7D0Cfcxd7JxcxP4kyCZ4ImFad0I2WnsMMR029XBRIHVbw4Rvi3SbSjTMXW+PtNlzib1BMrKYF4oL7PL2eRxXruPILEy/qHWa21b4lQC+8M/vKfL/qYBPQ5h6q0AaUaneQ1AVVZoY72kkVfFbOejiL8V+xyik96J0bWudY9z6i5QF4MAAbPtzcOaFS6Lx8U7IwRbpPjoHH3NjyZhjBzFPeRXOHlz8vtV8V4PNZ7nZTPBtTwxYWJsmCKJL50pxjp5bmf22wPSs4dpKyR9XTmgEbYjdYGpFCzvZrUE49Y8JpT57gMiaDqaxQXWsQGOK8zQL+R+dhsx1v8z4s/DvLpuuUkzQjcFv6muGZv04L6AkxLGsLZGod+lSxjGKEjfWmQDpzVQLflrJOa6ztcbCqCWUQgjl/n1dXaq506CdhP+rsQzOyWB6kS4CwsCl+iAddok2P/t+ktWmsOLGVhknl86KgjBURsw4cnwjkq8MkU14wICyWJgVqB6Hy0kyJzJTn0Ucpw== danielolanoburga@cc-732e18ea-6d498bb946-lhf75
 
 ### Adición de la clave SSH a una máquina virtual Linux existente
 Se puede instalar la clave publica en una VM con el siguiente comando, donde _myserver_ es la VM y _azureuser_ es el usuario.
@@ -177,3 +176,11 @@ Para el tráfico entrante, Azure procesa el grupo de seguridad asociado a la sub
 Las reglas se evalúan en orden de prioridad, comenzando por la regla de prioridad más baja. Las reglas de denegación siempre detienen la evaluación. 
 
 La última regla es siempre una regla de Denegar todo. Se trata de una regla predeterminada que se agrega a todos los grupos de seguridad para el tráfico entrante y saliente con una prioridad de 65500. Para que el tráfico pase por el grupo de seguridad, debe tener una regla de permiso o la regla final predeterminada lo bloqueará.
+
+--- 
+
+# Configuración de la red
+Cuando se crea la VM, se selecciona el puerto de entrada SSH 22 para conectarnos a esta VM. Esto ha creado tambien un NSG que esta adjuntado a la interfaz de red de la VM. Este NSG bloquea el trafico HTTP, por lo que se debe actualizar para aceptar trafico HTTP entrante por el puerto 80.
+
+## _Actualización del grupo de seguridad de red en la interfaz de red_
+Por default el puerto 80 esta abierto en las reglas del grupo de seguridad de a nivel de subnet pero esta bloqueado el puerto 80 a nivel de interfaz de red. Se debe agregar una regla de entrada en la configuracion de Networking del VM que acepte trafico HTTP por el puerto 80.
