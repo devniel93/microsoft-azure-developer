@@ -98,3 +98,14 @@ Ventajas:
 - Compatibilidad con equipos de desarrollo distribuidos geográficamente: Como se accede por Internet al entorno de desarrollo, los equipos de desarrollo pueden trabajar conjuntamente en proyectos incluso cuando los miembros de los equipos se encuentran en ubicaciones remotas.
 
 - Administración eficaz del ciclo de vida de la aplicación: PaaS proporciona todas las funcionalidades necesarias para admitir todo el ciclo de vida de una aplicación web: compilación, prueba, implementación, administración y actualización dentro del mismo entorno integrado.
+
+### Software como servicio SaaS
+Permite que los usuarios se conecten y usen aplicaciones basadas en la nube a través de Internet.Algunos ejemplos comunes son el correo electrónico, el calendario y las herramientas de oficina como Microsoft 365. Toda la infraestructura subyacente, el software intermedio, el software de aplicación y los datos de aplicación se encuentran en el centro de datos del proveedor de servicios. El proveedor de servicios administra el hardware y el software y, como el acuerdo de servicio adecuado, garantizará la disponibilidad y la seguridad de la aplicación y también de los datos.
+
+Ventajas:
+
+- Obtención de acceso a aplicaciones sofisticadas: Para proporcionar aplicaciones SaaS a los usuarios, no tiene que comprar, instalar, actualizar ni mantener hardware, software intermedio ni software alguno. Con SaaS, incluso las aplicaciones empresariales sofisticadas, como ERP y CRM, son accesibles para las organizaciones que no cuentan con los recursos para comprar, implementar ni administrar la infraestructura y el software que se necesita. Solo se paga lo que se usa. 
+
+- Uso de software cliente gratis: Los usuarios pueden ejecutar la mayoría de las aplicaciones SaaS directamente desde el explorador web sin tener que descargar ni instalar software. 
+
+- Acceso a datos de aplicación desde cualquier lugar: Con los datos almacenados en la nube, los usuarios pueden acceder a su información desde cualquier dispositivo móvil o equipo conectado a Internet.
