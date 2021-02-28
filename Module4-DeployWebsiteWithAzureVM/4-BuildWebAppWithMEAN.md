@@ -86,3 +86,21 @@ sudo systemctl status mongodb
 ```
 mongod --version
 ```
+
+## _Instalar Node.js_
+Node.js actua como el host del lado servidor para la aplicación web y controla el tráfico HTTP entrante. También proporciona una manera de comunicarse con MongoDB
+
+1. Registrar repositorio de Node.js para que el admin de paquetes localice los paquetes de Node.
+```
+curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+```
+
+2. Instalar paquete de node
+```
+sudo apt install nodejs
+```
+
+3. Comprobar la instalación
+```
+nodejs -v
+```
