@@ -168,3 +168,35 @@ Get-AzNetworkSecurityGroup -ResourceGroup $vm.ResourceGroupName | Remove-AzNetwo
 ```
 Get-AzPublicIpAddress -ResourceGroup $vm.ResourceGroupName | Remove-AzPublicIpAddress -Force
 ```
+
+--- 
+
+## _¿Qué es un script de PowerShell?_
+Es un archivo de texto que contiene comandos y construcciones de control. Los comandos son invocaciones de los cmdlets. Las construcciones de control son características de programación como bucles, variables, parámetros, comentarios, etc., proporcionadas por PowerShell. Tienen la extensión de archivo .ps1. 
+
+## _Creación y guardado de scripts en Azure PowerShell_
+
+1. Crear un archivo `touch "./ConferenceDailyReset.ps1"`
+2. Editar el archivo 
+```
+param([string]$resourceGroup)
+
+$adminCredential = Get-Credential -Message "Enter a username and password for the VM administrator."
+
+For ($i = 1; $i -le 3; $i++)
+{
+    $vmName = "ConferenceDemo" + $i
+    Write-Host "Creating VM: " $vmName
+    New-AzVm -ResourceGroupName $resourceGroup -Name $vmName -Credential $adminCredential -Image UbuntuLTS
+}
+```
+
+3. Ejecutar el script
+```
+.\ConferenceDailyReset.ps1 learn-43199bc4-dfcf-4174-b484-86611eaa7318
+```
+
+4. Comprobar los recursos
+```
+Get-AzResource -ResourceType Microsoft.Compute/virtualMachines
+```
