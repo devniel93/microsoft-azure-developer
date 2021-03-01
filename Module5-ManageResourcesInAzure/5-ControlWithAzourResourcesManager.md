@@ -39,4 +39,20 @@ az resource tag --tags Department=Finance \
  ### Uso de directivas para aplicar estándares
 Se podria usar directivas para restringir las regiones de Azure en las que puede implementar recursos por temas de restricciones legales o normativas sobre dónde pueden residir los datos. Ademas, se podrían usar para restringir los tipos de tamaños de máquina virtual que se pueden implementar. Tambien, se podría usar las directivas para aplicar convenciones de nomenclatura para mantener un estándar de nomenclatura coherente entre los recursos de Azure.
 
+---
 
+## Protección de los recursos con el control de acceso basado en rol (RBAC)_
+RBAC proporciona la administración de acceso específico para los recursos de Azure, lo que permite conceder a los usuarios los derechos específicos necesarios para realizar sus trabajos. RBAC se considera un servicio central y se incluye con todos los niveles de suscripción sin costo alguno.
+
+Con RBAC, puede:
+
+- Permitir que un usuario administre las máquinas virtuales de una suscripción y que otro usuario administre las redes virtuales.
+- Permitir a un grupo de administradores de base de datos (DBA) administrar bases de datos SQL en una suscripción.
+- Permitir que un usuario administre todos los recursos de un grupo de recursos, como las máquinas virtuales, los sitios web y las subredes virtuales.
+- Permitir que una aplicación acceda a todos los recursos de un grupo de recursos.
+
+Para ver los permisos de acceso, usar el panel Control de acceso (IAM) en Azure Portal. 
+
+### Procedimientos recomendados para RBAC
+- Al planear la estrategia de control de acceso, conceder a los usuarios el nivel de privilegios mínimo que necesitan para realizar su trabajo.
+- Usar Bloqueos de recursos para asegurar que los recursos críticos no se modifican ni eliminan.
