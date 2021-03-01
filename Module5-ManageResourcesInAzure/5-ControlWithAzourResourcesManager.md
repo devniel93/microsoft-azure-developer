@@ -56,3 +56,13 @@ Para ver los permisos de acceso, usar el panel Control de acceso (IAM) en Azure 
 ### Procedimientos recomendados para RBAC
 - Al planear la estrategia de control de acceso, conceder a los usuarios el nivel de privilegios mínimo que necesitan para realizar su trabajo.
 - Usar Bloqueos de recursos para asegurar que los recursos críticos no se modifican ni eliminan.
+
+--- 
+
+## _Uso de bloqueos de recursos para proteger los recursos_
+Los bloqueos de recursos son una configuración que se puede aplicar a cualquier recurso para bloquear la modificación o eliminación. Se pueden establecer en Eliminar o en Solo lectura. 
+- Eliminar permite todas las operaciones en el recurso, pero bloquea la posibilidad de eliminarlo. - Solo lectura únicamente permite actividades de lectura en él y bloquea cualquier modificación o eliminación del recurso. 
+
+Los bloqueos de recursos se aplican con independencia de los permisos RBAC. Incluso si es el propietario del recurso, tendrá que quitar el bloqueo antes de poder realizar la actividad bloqueada.
+
+Usar los bloqueos de recursos para proteger esos elementos clave de Azure cuya eliminación o modificación podría tener un gran impacto. Algunos ejemplos son los circuitos ExpressRoute y las redes virtuales, bases de datos críticas y controladores de dominio. 
