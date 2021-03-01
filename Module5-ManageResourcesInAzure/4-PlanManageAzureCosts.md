@@ -46,3 +46,47 @@ La pertenencia existente a determinados productos y servicios de Microsoft puede
 - Tipos de suscripción de Azure
 - Location o ubicacion
 - Zonas para la facturación del tráfico de red:  el precio de la transferencia de datos se basa en las zonas. Una zona es una agrupación geográfica de regiones de Azure para fines de facturación. 
+
+--- 
+
+## _Comprender los costos estimados antes de implementar_
+Al planear su solución en Azure, tenga en cuenta detenidamente los productos, servicios y recursos que necesita. Calcule los costos previstos mediante la Calculadora de precios y la calculadora de costo total de propiedad (TCO). Agregue solo los productos, servicios y recursos que necesita para la solución.
+
+## _Usar Azure Advisor para supervisar la utilización_
+Identifica los recursos no utilizados o infrautilizados, y recomienda recursos no utilizados que se pueden quitar. Esta información le ayudará a configurar los recursos para que coincidan con la carga de trabajo real.
+
+## _Usar límites de gasto para restringir los gastos_
+Se puede usar los límites de gasto para evitar la saturación accidental. Si se tiene una suscripción basada en crédito y alcanza el límite de gasto configurado, Azure suspende su suscripción hasta que comience un nuevo período de facturación. Un concepto relacionado es el de cuotas o límites en el número de recursos similares que se pueden aprovisionar dentro de la suscripción. 
+
+## _Usar Reservas de Azure para pagar por adelantado_
+Reservas de Azure ofrecen precios con descuento en determinados servicios de Azure. Reservas de Azure puede ahorrar hasta un 72 % en comparación con los precios de pago por uso. 
+
+## _Elegir regiones y ubicaciones de bajo costo_
+Si es posible, debe usar en aquellas ubicaciones y regiones donde el costo es menor.
+
+## _Investigación de las ofertas de ahorro de costos disponibles_
+Mantenerse al día de las últimas ofertas de clientes y suscripciones de Azure.
+
+## _Usar Azure Cost Management + Billing para controlar gastos_
+Es un servicio gratuito que le ayuda a comprender su factura de Azure, administrar su cuenta y sus suscripciones, supervisar y controlar los gastos de Azure, y optimizar el uso de recursos.
+
+## _Aplicar etiquetas para identificar a los propietarios de costos_
+Las etiquetas ayudan a administrar los costos asociados a los distintos grupos de productos y recursos de Azure. Puede aplicar etiquetas a grupos de recursos de Azure para organizar los datos de facturación.
+
+## _Cambiar el tamaño de las máquinas virtuales infrautilizadas_
+Una recomendación común que encontrará de Azure Cost Management + Billing y Azure Advisor es cambiar el tamaño o apagar las VM que están infrautilizadas o inactivas.
+
+## _Desasignar máquinas virtuales durante las horas de inactividad_
+Desasignar una máquina virtual significa que ya no se ejecuta la máquina virtual, sino que se conservan los discos duros y los datos asociados en Azure. Si tiene cargas de trabajo de VM que solo se usan durante determinados períodos, pero las ejecuta cada hora de cada día, está malgastando dinero.
+
+## _Eliminar recursos no utilizados_
+No es poco frecuente encontrar sistemas de prueba de concepto, o que no son de producción, que después de completar un proyecto ya no son necesarios.
+
+## _Migración de servicios IaaS a PaaS_
+Una manera de reducir costos es trasladar gradualmente las cargas de trabajo de IaaS para ejecutarlas en servicios de plataforma como servicio (PaaS). No solo la ejecución de servicios de PaaS como Azure SQL Database suele ser menos costosa, pero dado que se administran automáticamente, no es necesario preocuparse por las actualizaciones de software, las revisiones de seguridad ni optimizar el almacenamiento físico para operaciones de lectura y escritura.
+
+## _Elección de sistemas operativos rentables_
+Azure ofrecen una opción de ejecución en Windows o Linux.
+
+## _Uso de la Ventaja híbrida de Azure para reasignar licencias de software en Azure_
+Si ha adquirido licencias para Windows Server o SQL Server, y las licencias están cubiertas por Software Assurance, es posible que pueda reasignar esas licencias a VM de Azure.
