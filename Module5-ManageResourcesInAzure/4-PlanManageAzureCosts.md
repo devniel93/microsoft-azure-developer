@@ -13,12 +13,11 @@ Escribir las especificaciones de la infraestructura local en funcion de:
     - Redes: incluye la cantidad de ancho de banda de red que se usa actualmente en el entorno local.
 
 - Ajustar los supuestos
-Se puede reutilizar lcencias en Azure si es que estan inscritas para _Software Assurance_. Tambien se puede ahorrar evaluando si es necesario replicar a nivel de regiones. 
-
-Las proyeciones por costos operativos estan certificados por Nucleus Researc y comprenden:
+Se puede reutilizar lcencias en Azure si es que estan inscritas para _Software Assurance_. Tambien se puede ahorrar evaluando si es necesario replicar a nivel de regiones. Las proyeciones por costos operativos estan certificados por Nucleus Researc y comprenden:
     - Precio de electricidad por kilovatios/hora (KWh).
     - Tarifa por hora para la administración de TI.
     - Costo de mantenimiento de la red como un porcentaje de los costos de software y hardware de red.
 
 - Consulte el informe.
 Se puede escoger un período de tiempo entre uno y cinco años. La calculadora de TCO genera un informe que se basa en la información especificada. Se puede ver una comparación en paralelo del desglose de costos de funcionamiento de esas cargas de trabajo locales frente a su funcionamiento en Azure.
+
