@@ -11,3 +11,17 @@ Es un módulo que se agrega a Windows PowerShell o PowerShell Core para permitir
 
 - Conjunto de aptitudes del equipo: ¿el equipo tiene experiencia? Por ejemplo, el equipo puede haber usado PowerShell para administrar Windows. En su caso, sus miembros se familiarizarán rápidamente con el uso de Azure PowerShell.
 
+## _Instalación de Azure PowerShell_
+Se necesitan 2 componentes:
+- El producto básico de PowerShell. Se presenta en dos variantes: PowerShell para Windows y PowerShell Core para macOS y Linux.
+
+- El módulo Azure PowerShell. Este módulo adicional debe estar instalado para agregar los comandos específicos de Azure en PowerShell.
+
+* PowerShell se incluye con Windows (pero puede que haya una actualización disponible). Tendrá que instalar PowerShell Core en Linux y macOS.
+
+Para ver la version de PowerShell en Windows:
+```
+$PSVersionTable.PSVersion
+```
+
+Si es una version menor a 5.0, se debe actualizar.
