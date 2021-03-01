@@ -15,3 +15,16 @@ Los grupos de recursos se pueden organizar de varias formas:
 - Por entorno (producción, pruebas y desarrollo).
 - Por departamento (Marketing, Finanzas, Recursos Humanos).
 - Combinación de estas estrategias y organizar por entorno y departamento
+
+---
+
+## _¿Qué son las etiquetas?_
+Son pares de nombre/valor de datos de texto que se pueden aplicar a recursos y grupos de recursos. Un recurso puede tener hasta 50 etiquetas. El nombre está limitado a 512 caracteres para todos los tipos de recursos, excepto las cuentas de almacenamiento, que tienen un límite de 128 caracteres. El límite del valor de una etiqueta es de 256 caracteres para todos los tipos de recursos.  No todos los tipos de recursos admiten etiquetas.
+
+Para agregar una etiqueta:
+```
+az resource tag --tags Department=Finance \
+    --resource-group msftlearn-core-infrastructure-rg \
+    --name msftlearn-vnet1 \
+    --resource-type "Microsoft.Network/virtualNetworks"
+```
