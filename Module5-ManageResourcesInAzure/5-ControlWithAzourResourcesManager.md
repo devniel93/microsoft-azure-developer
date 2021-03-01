@@ -28,3 +28,15 @@ az resource tag --tags Department=Finance \
     --name msftlearn-vnet1 \
     --resource-type "Microsoft.Network/virtualNetworks"
 ```
+
+---
+
+## _¿Qué es Azure Policy?_
+ es un servicio que se puede usar para crear, asignar y administrar directivas. Estas directivas aplican las reglas que los recursos deben seguir. Estas directivas pueden aplicar estas reglas cuando se crean los recursos y se pueden evaluar con respecto a los recursos existentes para ofrecer visibilidad sobre el cumplimiento normativo.
+
+ Las directivas pueden exigir, por ejemplo, que solo se permita la creación de determinados tipos de recursos, o bien que solo se permitan los recursos de regiones de Azure concretas. También puede exigir que se apliquen etiquetas específicas a los recursos.
+
+ ### Uso de directivas para aplicar estándares
+Se podria usar directivas para restringir las regiones de Azure en las que puede implementar recursos por temas de restricciones legales o normativas sobre dónde pueden residir los datos. Ademas, se podrían usar para restringir los tipos de tamaños de máquina virtual que se pueden implementar. Tambien, se podría usar las directivas para aplicar convenciones de nomenclatura para mantener un estándar de nomenclatura coherente entre los recursos de Azure.
+
+
