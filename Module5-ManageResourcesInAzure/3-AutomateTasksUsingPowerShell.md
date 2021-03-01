@@ -25,3 +25,146 @@ $PSVersionTable.PSVersion
 ```
 
 Si es una version menor a 5.0, se debe actualizar.
+
+---
+
+## _¿Qué son los cmdlets de PowerShell?_
+Un comando de PowerShell se denomina cmdlet, es un comando que manipula una sola caracteristica. Los cmdlets siguen una convención de nomenclatura de verbo-sustantivo, por ejemplo, Get-Process, Format-Table y Start-Service.
+
+
+## _¿Qué son los módulos de PowerShell?_
+Los cmdlets se suministran en módulos. Un módulo de PowerShell es un archivo DLL que incluye el código necesario para procesar todos los cmdlets disponibles. Se puede obtener los modulos disponibles ejecutando `Get-Module`
+
+## _¿Qué es un módulo Az?_
+Az es el nombre formal del módulo de Azure PowerShell que contiene cmdlets para trabajar con las características de Azure. 
+* El módulo Az incluye compatibilidad con versiones anteriores del módulo AzureRM. Por lo tanto, el formato de cmdlet -AzureRM funcionará, pero deberá realizar la transición al módulo Az.
+
+### Instalación del módulo Az
+1. Ejecutar como admin Windows Powershell
+2. Ejecutar el comando
+```
+Install-Module -Name Az -AllowClobber -SkipPublisherCheck
+```
+
+3. Si ocurre error en la ejecucion por direcion "restringida", ejecutar 
+```
+Set-ExecutionPolicy RemoteSigned
+```
+
+4. Si recibe un mensaje que ya existe una version instalada de Azure, ejecutar actualizacion
+```
+Update-Module -Name Az
+```
+
+5. Conectarse a la cuenta de Azure
+```
+Connect-AzAccount
+```
+
+6. Para obtener la suscripcion activa
+```
+Get-AzContext
+```
+
+6. Para setear la suscripcion de Azure
+```
+Select-AzSubscription -SubscriptionId '53dde41e-916f-49f8-8108-558036f826ae'
+```
+
+7. Para obtener una lista de todos los grupos de recursos de la suscripción activa
+```
+Get-AzResourceGroup | Format-Table
+```
+
+8. Para crear un Resource Group
+```
+New-AzResourceGroup -Name <name> -Location <location>
+```
+
+9. Para crear una VM
+```
+New-AzVm 
+       -ResourceGroupName <resource group name> 
+       -Name <machine name> 
+       -Credential <credentials object> 
+       -Location <location> 
+       -Image <image name>
+```
+
+10. Para asignar variales y tomar dicho objeto para hacer otras acciones
+```
+$ResourceGroupName = "ExerciseResources"
+$vm = Get-AzVM  -Name MyVM -ResourceGroupName $ResourceGroupName
+$vm.HardwareProfile.vmSize = "Standard_DS3_v2"
+
+Update-AzVM -ResourceGroupName $ResourceGroupName  -VM $vm
+```
+
+11. Para crear una Vm abriendo puerto 22 para acceso SSH
+```
+New-AzVm -ResourceGroupName learn-43199bc4-dfcf-4174-b484-86611eaa7318 -Name "testvm-eus-01" -Credential (Get-Credential) -Location "East US" -Image UbuntuLTS -OpenPorts 22
+```
+devniel93
+Sistem123@$12345
+
+12. Para acceder a las propiedades del hardware
+```
+$vm = (Get-AzVM -Name "testvm-eus-01" -ResourceGroupName learn-43199bc4-dfcf-4174-b484-86611eaa7318)
+$vm.HardwareProfile
+```
+
+13. Para obtener información sobre uno de los discos
+```
+$vm.StorageProfile.OsDisk
+```
+
+14. Para obtener IP publica
+```
+$vm | Get-AzPublicIpAddress
+```
+
+15. Para conectarse por SSH 
+```
+ssh devniel93@52.170.0.205
+```
+
+16. Para eliminar una VM
+Primero, cerrar
+```
+Stop-AzVM -Name $vm.Name -ResourceGroup $vm.ResourceGroupName
+```
+
+Luego eliminar (Esto solo eliminara la VM)
+```
+Remove-AzVM -Name $vm.Name -ResourceGroup $vm.ResourceGroupName
+```
+
+Para comprobar los recursos 
+```
+Get-AzResource -ResourceGroupName $vm.ResourceGroupName | ft
+```
+
+17. Eliminar interfaz de red
+```
+$vm | Remove-AzNetworkInterface –Force
+```
+
+18. Eliminar los discos administrados del SO y el storage account
+```
+Get-AzDisk -ResourceGroupName $vm.ResourceGroupName -DiskName $vm.StorageProfile.OSDisk.Name | Remove-AzDisk -Force
+```
+
+19. Eliminar la VNet
+```
+Get-AzVirtualNetwork -ResourceGroup $vm.ResourceGroupName | Remove-AzVirtualNetwork -Force
+```
+
+20. Eliminar el NSG
+```
+Get-AzNetworkSecurityGroup -ResourceGroup $vm.ResourceGroupName | Remove-AzNetworkSecurityGroup -Force
+```
+
+21. Eliminar la IP Publica
+```
+Get-AzPublicIpAddress -ResourceGroup $vm.ResourceGroupName | Remove-AzPublicIpAddress -Force
+```
