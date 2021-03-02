@@ -36,3 +36,57 @@ az rest --method post /
 ```
 
 Cuando se usa la CLI de Azure para llamar a una operación de la API de REST de Azure, no es necesario proporcionar un identificador de suscripción o un token de acceso. La CLI incluye estos valores automáticamente.
+
+## _Descripción de traslados de recursos_
+Cuando se inicia un proceso de trasaldo, se bloquea el RG que contiene los recursos y el RG destino, es decir no se pueden actualizar o eliminar en los RG hasta que termine el traslado. Los recursos que se trasladan no cambian de ubicacion o region.
+
+### Traslado de recursos entre suscripciones
+Los recursos se pueden trasladar entre suscripciones o entre grupos de recursos dentro de la misma suscripción. 
+
+- Traslade los recursos dependientes a un grupo de recursos con el recurso.
+- Traslade el recurso y los recursos dependientes juntos desde la suscripción de origen a la de destino.
+- Opcionalmente, se puede redistribuir los recursos dependientes a distintos grupos de recursos dentro de la suscripción de destino.
+
+## _Cómo trasladar recursos_
+
+### Movimiento de recursos mediante la CLI de Azure
+1. Crear un RG
+```
+az group create --name <destination resource group name> --location <location name>
+```
+
+2.  Obtener el recurso
+```
+yourResource=$(az resource show --resource-group <resource group name> --name <resource name> --resource-type <resource type> --query id --output tsv)
+```
+
+3. Trasladar el recurso a otro RG 
+```
+az resource move --destination-group <destination resource group name> --ids $yourResource
+```
+
+4. Listar todos los recursos del RG para que comprobar el traslado
+```
+az resource list --resource-group <destination resource group name> --query [].type --output tsv | uniq
+```
+
+### Trasladar recursos mediante Azure PowerShell
+1. Crear un RG
+```
+New-AzResourceGroup -Name <destination resource group name> -Location <location name>
+```
+
+2.  Obtener el recurso
+```
+$yourResource = Get-AzResource -ResourceGroupName <resource group name> -ResourceName <resource name>
+```
+
+3. Trasladar el recurso a otro RG 
+```
+Move-AzResource -DestinationResourceGroupName <destination resource group name> -ResourceId $yourResource.ResourceId
+```
+
+4. Listar todos los recursos del RG para que comprobar el traslado
+```
+Get-AzResource -ResourceGroupName <destination resource group name> | ft
+```
