@@ -49,3 +49,33 @@ git add .
 git commit -m "New version of web app."
 git push staging
 ```
+
+---
+
+## _Implementación de una aplicación web mediante el intercambio de ranuras de implementación_
+Cuando intercambia dos ranuras, la configuración de la aplicación viaja a la ranura nueva junto con la aplicación. Puede invalidar este comportamiento para la configuración de la aplicación individual y las cadenas de configuración si las configura como `configuración de ranura`.
+
+### Configuración de los valores de ranura
+1. En Azure Portal > Ranura de implementacion > Configuracion
+2. Editar los valores de configuracion de aplicacion o cadenas de conexion.
+
+### Intercambio de ranuras en Azure Portal
+1. En Azure Portal > Ranura de implementacion de la web app > Ranuras de implementacion
+2. Seleccionar Intercambiar
+3. En el cuadro de diálogo Intercambiar, puede seleccionar las ranuras de origen y destino y ver un resumen de la configuración que se aplicará a las ranuras intercambiadas:
+
+### Descripción de la vista previa de intercambio de ranuras
+Al intercambiar las ranuras, la configuración de la ranura de destino (que normalmente es el espacio de producción) se aplica a la versión de la aplicación en la ranura de origen antes de que se intercambien los nombres de host.
+
+Para ayudar a detectar problemas antes de que la aplicación se lance a producción, Azure App Service ofrece una característica de intercambio con vista previa que se realiza en 2 fases:
+- Fase 1: la configuración de ranura de la ranura de destino se aplica a la aplicación web en la ranura de origen. Luego, Azure prepara el espacio de ensayo. En este momento, la operación de intercambio se pausa para que se pueda probar la aplicación en la ranura de origen y asegurarse de que funciona con la configuración de la ranura de destino. Si no detecta ningún problema, comience la fase siguiente.
+- Fase 2: se intercambian los nombres de host de ambos sitios. La versión de la aplicación que ahora está en la ranura de origen recibe su configuración de ranura.
+
+### Intercambio automático
+Lleva las ventajas de no tener tiempo de inactividad y la reversión sencilla de la implementación basada en intercambio a las canalizaciones de implementación automatizada.
+El intercambio automático no está disponible en App Service en Linux.
+
+### Configuración del intercambio automático
+1. En Azure Portal > Selecionar Configuracion general de la ranura > Ranura de implementacion > Establecer Intercambio auomtatico habilitado
+2. Seleccionar la ranura de destino
+3. Guardar
