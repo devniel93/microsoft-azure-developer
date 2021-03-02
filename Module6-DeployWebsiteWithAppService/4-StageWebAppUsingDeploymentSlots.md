@@ -18,3 +18,34 @@ El retraso inicial se denomina arranque en frío. Puede evitar un arranque en fr
 1. En Azure Portal > seleccionar Deplyment Slot > Add Slot
 2. Ingresar nombre y elegir si se desea clonar de otra ranura. Se puede clonar solo la configuracion mas no el contenido. Para implementar contenido se puede usar git para implementar.
 3. Seleccionar Agregar para que se cree la nueva ranura.
+
+## _Configuración de la implementación de Git_
+1. En Azure Portal seleccionar la aplicacion web > Implementacion > Centro de implementacion
+2. Seleccionar Git local > continuar > Servicio de compilacion de App Service > Finalizar
+3. Seleccionar Credenciales de implementacion > Credenciales de usuario > Ingresar nuevo nombre de usuario y password para Guardar credenciales.
+
+## _Configuración de un Git remoto para implementar la aplicación en producción_
+1. Obtener la URL de clonacion de Git desde la informacion general del web app en Azure Portal.
+2. Ejecutar lo siguiente para configurar la YRL como GIT remoto llamado _production_
+```
+git remote add production <git-clone-url>
+```
+3. Para implementar la aplicación web en el espacio de producción, ejecutar el comando siguiente
+```
+git push production
+```
+
+## _Configuración de la implementación de Git para el espacio de ensayo_
+1. En Azure Portal > Web App creado >  Implementacion > Centro de implementacion
+2. Seleccionar Git local > Continuar > seleccionar Servicio de compilación de App Service > Continuar > Finalizar. 
+3. Copiar la URL de clonacion de Git del espacio de ensayo. 
+4. Para agregar la instancia remota para el espacio de ensayo, ejecutar el comando siguiente
+```
+git remote add staging <git-clone-uri>
+```
+5. Para modificar cambios en espacio de ensayo, ejecutar lo siguiente
+```
+git add .
+git commit -m "New version of web app."
+git push staging
+```
