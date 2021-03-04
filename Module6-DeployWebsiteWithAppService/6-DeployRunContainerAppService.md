@@ -36,3 +36,27 @@ cd mslearn-deploy-run-container-app-service/node
 az acr build --registry <container_registry_name> --image webimage .
 ```
 6. En Azure Portal > Container Registry > Servicios > Repositorios para ver el registro con la imagen 
+
+---
+
+## _Implementación de una aplicación web con una imagen desde un repositorio de Azure Container Registry_
+Se puede implementar una aplicación web en Azure App Service directamente desde Azure Container Registry. Al crear una aplicación web a partir de una imagen de Docker, se configuran las siguientes propiedades:
+
+- El registro que contiene la imagen que puede ser Docker Hub, Azure Container Registry o algún otro registro privado.
+- La imagen. Este elemento es el nombre del repositorio.
+- La etiqueta. Este elemento indica qué versión de la imagen se va a usar desde el repositorio. Por convención, a la versión más reciente se le asigna la etiqueta `latest` cuando se compila.
+- Archivo de inicio. Este elemento es el nombre de un archivo ejecutable o un comando que se debe ejecutar cuando se carga la imagen. Es equivalente al comando que puede proporcionar a Docker cuando ejecuta una imagen desde la línea de comandos con `docker run` 
+
+### Creación e implementación de una aplicación web desde una imagen de Docker
+1. Habilitar el acceso de Docker a ACR
+En Azure Portal > Informacion General del ACR creado > Configuracion > Claves de Aceso > Habilitar la opcion Usuario Administrador.
+2. Crear la aplicacion web
+En Azure Portal > Crear recurso > Web > Aplicacion web 
+Ingresar suscripcion, RG, nombre, publicar como Contenedor de Docker, SO Linux y plan de App Service predeterminado.
+En la seccion de Docker > opciones contenedor unico, origen de la imagen Azure Container Registry, seleccionar el registro, imagen, etiqueta `latest`, comando de incio dejar en blanco.
+Revisar y crear > Crear
+3. Probar la aplicacion web
+En Azure Portal > Aplicacion Web > Informacion General > Examinar y ver el sitio en el explorador.
+
+
+
