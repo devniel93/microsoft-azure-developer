@@ -81,3 +81,28 @@ az acr task create \
 --file Dockerfile \
 --git-access-token <access_token>
 ```
+
+---
+
+## _Configuración de la implementación continua y creación de un webhook
+1. En Azure Portal > Web App > Configuracion del contenedor
+2. Activar Implementacion continua > Guardar. En esta configuración se configura un webhook que Container Registry puede usar para alertar a la aplicación web de que la imagen de Docker ha cambiado.
+3. Actualización de la aplicación web y prueba del webhook
+Editar el archivo `index.js`
+```
+cd ~/mslearn-deploy-run-container-app-service/node/routes
+code index.js
+
+...
+res.render('index', { title: 'Microsoft Learn' });
+...
+```
+4. Recompilar la imagen e instalarla en ACR
+```
+cd ~/mslearn-deploy-run-container-app-service/node
+az acr build --registry <container_registry_name> --image webimage .
+```
+
+5. Se puede comprobar el registro de webhook que acaba de activarse de la compilacion en la seccion de Webhooks del ACR en Azure Portal
+
+6. Probar la aplicacion web
