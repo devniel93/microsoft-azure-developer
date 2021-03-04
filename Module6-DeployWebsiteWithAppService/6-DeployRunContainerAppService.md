@@ -58,5 +58,26 @@ Revisar y crear > Crear
 3. Probar la aplicacion web
 En Azure Portal > Aplicacion Web > Informacion General > Examinar y ver el sitio en el explorador.
 
+## _Actualización de la imagen y reimplementación automática de la aplicación web_
+La implementación continua es una característica que permite implementar la versión más reciente del software rápidamente, pero con el mínimo de esfuerzo.
 
+### ¿Qué es un webhook?
+Es un servicio ofrecido por Azure Container Registry. Los servicios y aplicaciones pueden suscribirse al webhook para recibir notificaciones sobre actualizaciones de imágenes en el registro. Cuando la imagen se actualiza y App Service recibe una notificación, la aplicación reinicia automáticamente el sitio y extrae la última versión de la imagen.
 
+### ¿Qué es la característica _tareas_ de Container Registry?
+Se usa para recompilar la imagen siempre que su código fuente cambia automáticamente. Puede configurar una tarea de Container Registry para supervisar el repositorio de GitHub que contiene el código y desencadenar una compilación cada vez que cambie. 
+
+### Habilitación de la integración continua desde App Service
+La página Configuración del contenedor de un recurso de App Service en Azure Portal automatiza la configuración de la integración continua. Si activa Implementación continua, App Service configura un webhook en el registro de contenedor para notificar a un punto de conexión de App Service. 
+
+## _Ampliación de la integración continua al control de código fuente mediante una tarea de Container Registry_
+El siguiente comando muestra cómo crear una tarea llamada buildwebapp, el cual supervisa el repo Github para la web app. Cada vez que hay un cambio, la tare compila la imagen de Docker y la almacena en ACR.
+```
+az acr task create \
+--registry <container_registry_name> \
+--name buildwebapp --image webimage \
+--context https://github.com/MicrosoftDocs/mslearn-deploy-run-container-app-service.git \
+--branch master \
+--file Dockerfile \
+--git-access-token <access_token>
+```
