@@ -52,3 +52,21 @@ Se puede usar análisis integrados como reglas personalizadas para detectar las 
 
 ### Investigación y respuesta
 Se puede investigar alertas o incidentes (un grupo de alertas relacionadas) concretos con el grafo de investigación. Tambien se puede automatizar las respuestas a las amenazas mediante `Libros de Azure Monitor`.
+
+---
+
+## _Almacenamiento y administración de secretos mediante Azure Key Vault_
+Azure Key Vault es un servicio en la nube centralizado para almacenar los secretos de la aplicación en una única ubicación central. Proporciona un acceso seguro a la información confidencial mediante capacidades de control de acceso y registro.
+
+Permite:
+- Administración de secretos: lmacenar de forma segura y controlar exhaustivamente el acceso a tokens, contraseñas, certificados, claves de API y otros secretos.
+- Administrar claves de cifrado: Key Vault facilita la creación y el control de las claves de cifrado que se emplean para cifrar los datos.
+- Administrar certificados SSL/TLS: provisionar, administrar e implementar los certificados públicos y privados de Capa de sockets seguros/Seguridad de la capa de transporte (SSL/TLS) de los recursos de Azure y los recursos internos.
+- Almacenar secretos respaldados por módulos de seguridad de hardware (HSM): Estas claves y secretos se pueden proteger mediante software o mediante HSM validados por FIPS 140-2 nivel 2.
+
+### ¿Cuáles son las ventajas de Azure Key Vault?
+- Secretos de aplicación centralizados
+- Secretos y claves almacenados de forma segura
+- Supervisión y control de acceso
+- Administración simplificada de secretos de aplicación
+- Integración con otros servicios de Azure
