@@ -21,3 +21,18 @@ Para compilar una imagen
 ```
 az acr build --file Dockerfile --registry myregistry --image myimage .
 ```
+
+### Creacion de un registro por Azure Portal
+1. En Azure Portal > Crear un recurso > Contenedores > Container Registry
+2. Ingresar nombre de registro, suscripcion, RG, ubicacion, SKU
+3. Crear
+4. Descargar codigo fuente de aplicacion web de ejemplo.
+```
+git clone https://github.com/MicrosoftDocs/mslearn-deploy-run-container-app-service.git
+```
+5. Compilar la imagen y almacenar en el Azure Container Registry 
+```
+cd mslearn-deploy-run-container-app-service/node
+az acr build --registry <container_registry_name> --image webimage .
+```
+6. En Azure Portal > Container Registry > Servicios > Repositorios para ver el registro con la imagen 
