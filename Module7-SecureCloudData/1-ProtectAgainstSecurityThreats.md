@@ -94,3 +94,19 @@ az keyvault secret show \
   --query value \
   --output tsv
 ```
+
+---
+
+## _Hospedaje de máquinas virtuales de Azure en servidores físicos dedicados mediante Azure Dedicated Host_
+En Azure, las máquinas virtuales (VM) se ejecutan en hardware compartido administrado por Microsoft. Aunque el hardware subyacente se comparte, las cargas de trabajo de las máquinas virtuales están aisladas de las que ejecutan otros clientes de Azure. Algunas organizaciones deben ajustarse a un cumplimiento normativo que las obliga a ser el único cliente que usa el equipo físico en el que se hospedan sus máquinas virtuales. Azure Dedicated Host proporciona servidores físicos dedicados para hospedar las máquinas virtuales de Azure para Windows y Linux.
+
+### ¿Cuáles son las ventajas de Azure Dedicated Host?
+- Ofrece visibilidad y control sobre la infraestructura de servidor que ejecuta las VM de Azure.
+- Satisface requisitos de cumplimiento mediante la implementación de las cargas de trabajo en un servidor aislado.
+- Permite elegir el número de procesadores, capacidades de servidor, series de máquinas virtuales y tamaños de máquina virtual dentro del mismo host.
+
+### Consideraciones de disponibilidad de Dedicated Host
+Después de aprovisionar un host dedicado, Azure lo asigna al servidor físico en el centro de datos en la nube de Microsoft. Para lograr una alta disponibilidad, puede aprovisionar varios hosts en un grupo host e implementar las máquinas virtuales en este grupo. 
+
+### Consideraciones sobre precios
+Se cobra por host dedicado, con independencia de cuántas máquinas virtuales se implementen en él. El precio del host se basa en la familia de máquinas virtuales, el tipo (tamaño de hardware) y la región.
