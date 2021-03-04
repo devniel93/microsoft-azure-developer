@@ -70,3 +70,27 @@ Permite:
 - Supervisión y control de acceso
 - Administración simplificada de secretos de aplicación
 - Integración con otros servicios de Azure
+
+---
+
+## _Administración de una contraseña en Azure Key Vault_
+
+### Creación de un Almacén de claves
+1. En Azure Portal > Crear recurso > Almacen de claves  > Crear 
+2. Ingresar suscripcion, RG, nombre de almacen de claves
+3. Revisar y crear > Crear
+* La suscripción de Azure es la única que está autorizada a acceder a este almacén. En Configuración, la característica Directivas de acceso permite configurar el acceso al almacén.
+
+### Adición de una contraseña al almacén de claves
+1. En Configuracion > seleccionar Secretos
+2. Seleccionar Generar/Importar
+3. Ingresar opciones de carga Manual, Nombre, Valor
+4. Seleccionar Crear
+5. Para ver el secret creado se puede ver en la parte de Secretos de Azure Portal o ejecutar el comando Azure CLI:
+```
+az keyvault secret show \
+  --name MyPassword \
+  --vault-name $(az keyvault list --query [0].name --output tsv) \
+  --query value \
+  --output tsv
+```
