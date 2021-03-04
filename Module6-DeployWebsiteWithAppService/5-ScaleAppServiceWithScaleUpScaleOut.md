@@ -71,3 +71,18 @@ dotnet run
 8. En Supervision > seleccionar Metricas > Agregar metricas de tiempo CPU, errores servidor HTTP, HTTP4xx, tiempo medio de respuesta. Todos con la agregacion de Suma. Esto permitira ver el rendimiento del CPU, la cantidad de errores de servidor HTTP, el tiempo promedio de respuesta.
 
 9. en Configuracion > Escalar horizontalmente > Establecer recuento de instancias en 5. Al ver las metricas se vera una mejora ya que hay 5 veces mas potencia en CPU.
+
+---
+
+## _Escalado vertical de una aplicación web_
+Si en un principio implementa una aplicación web con un plan de tarifa relativamente barato, es posible que los recursos sean suficientes para empezar. Pero puede que los recursos no sean suficientes si crece la demanda del servicio web o si agrega características que necesitan más potencia. En este caso, puede escalar verticalmente a un plan de tarifa más eficaz.
+
+### Planes de tarifa del plan de App Service y niveles de hardware
+Los niveles Básico, Estándar y Premium se basan en máquinas virtuales de la serie A con distintas cantidades de memoria y capacidad de E/S. Los niveles PremiumV2 y Aislado se basan en máquinas virtuales de la serie Dv2. Cada uno de estos niveles tiene tres opciones de hardware, que se corresponden aproximadamente con una, dos y cuatro CPU. 
+
+### Escalado vertical de una web app
+Para escalar y reducir verticalmente un plan de App Service, cambiar el pan de tarifa y el nivel de hardware. El escalado vertical puede provocar una interrupción en el servicio de las aplicaciones cliente que se ejecutan en ese momento. Ademas, el escalado vertical puede hacer que las direcciones IP salientes para la aplicación web cambien. Si la aplicación web depende de otros servicios con firewalls que restringen el tráfico entrante, deberá volver a configurar estos servicios.
+
+1. En Azure Portal > Plan de App Service > Configuracion > seleccionar Escalar verticalmente (plan de App Service). 
+2. Seleccionar plan de tarifa P2V2 > Aplicar. Este plan ofrece 420 unidades de proceso de Azure y 7 GB de ram. > Aplicar
+Mientras se realiza el escalado vertical del sistema, es posible que se muestren algunos errores más del servidor HTTP. Estos errores está provocados por solicitudes de clientes en curso que se anularon cuando el sistema cambió de hardware.
