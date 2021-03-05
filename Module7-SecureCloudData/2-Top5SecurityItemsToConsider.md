@@ -47,3 +47,50 @@ Es un almacén de secretos: un servicio centralizado en la nube para almacenar s
 
 ### ¿Por qué usar un almacén de claves para los secretos?
 La administración de claves y el almacenamiento de secretos puede ser algo complicado y propenso a errores cuando se realiza manualmente. La rotación manual de certificados significa potencialmente prescindir de ellos durante algunas horas o días.
+
+--- 
+
+## Actualizaciones del marco (framework)
+Elegir el marco de trabajo para el desarrollo de software es una decisión importante, no solo desde el punto de vista del diseño y la funcionalidad, sino también desde el punto de vista de la seguridad. Elegir un marco de trabajo con características de seguridad modernas y mantenerlo actualizado es una de las mejores formas de asegurarse de que sus aplicaciones son seguras.
+
+### Importancia de la elección del marco de trabajo
+Los marcos de trabajo anteriores tendían a ser reemplazados o a terminar por desvanecerse. Aunque tenga una fantástica experiencia con muchas aplicaciones escritas en un marco anterior, es mejor que elija una biblioteca moderna que tenga las características que necesita. Los marcos modernos suelen basarse en las lecciones aprendidas en las iteraciones anteriores, por lo que su elección para las nuevas aplicaciones es una forma de minimizar la exposición a las amenazas. Si se detecta una vulnerabilidad en el marco antiguo en el que estén escritas las aplicaciones heredadas, eso supone una aplicación más de la que ocuparse.
+
+### Actualización continua del marco
+Los marcos de desarrollo de software, como Java Spring y .NET Core publican actualizaciones y nuevas versiones con regularidad. Estas actualizaciones incluyen nuevas características, eliminación de características antiguas y, a menudo, correcciones de seguridad o mejoras.
+
+### ¿Cómo actualizar el marco de trabajo?
+Las bibliotecas más especializadas, como los marcos de JavaScript o los componentes de .NET, se pueden actualizar con un administrador de paquetes. NPM y Webpack son opciones populares para proyectos web y son compatibles con la mayoría de los IDE o herramientas de compilación. En .NET, se usa NuGet para administrar las dependencias de los componentes. 
+* Si usa Azure para hospedar sus aplicaciones web, Security Center le avisará en caso de que sus marcos estén obsoletos en la pestaña de recomendaciones.
+
+## _Aprovechamiento de las ventajas de la seguridad integrada_
+No usar nunca su propio método de seguridad si hay una técnica o funcionalidad estándar integrada. Se debe confiar en los algoritmos y flujos de trabajo ya probados porque numerosos expertos los someten a examen, los analizan y los refuerzan para garantizar que son confiables y seguros.
+
+---
+
+## _Dependencias seguras_
+Un porcentaje elevado del código presente en las aplicaciones modernas se compone de las bibliotecas y las dependencias elegidas por el desarrollador. Esto es una práctica común que ahorra tiempo y dinero. Pero la desventaja es que ahora es el responsable de este código, aunque otros lo han escrito, ya que lo utiliza en el proyecto. Si un investigador (o peor, un hacker) detecta una vulnerabilidad en una de estas bibliotecas de terceros, el mismo error probablemente también estará presente en su aplicación.
+
+### Seguimiento de vulnerabilidades de seguridad conocidas
+Mantener las bibliotecas y dependencias actualizadas será de ayuda, pero es una buena idea realizar un seguimiento de las vulnerabilidades identificadas que podrían afectar a la aplicación.
+
+Mitre es una organización sin ánimo de lucro que mantiene la lista de vulnerabilidades y exposiciones comunes (https://cve.mitre.org/). Esta lista es un conjunto de vulnerabilidades de ciberseguridad conocidas en aplicaciones, bibliotecas y marcos de trabajo que se puede consultar públicamente. 
+
+### Procedimiento para comprobar si tiene vulnerabilidades conocidas en los componentes de terceros
+Se puede ejecutar las siguientes herramientas en el código base o agregarlas a la canalización de CI/CD para buscar problemas automáticamente como parte del proceso de desarrollo:
+- OWASP Dependency Check, que tiene un complemento de Jenkins
+- SonarQube de OWASP
+- Synk, que es gratis para los repositorios de código abierto en GitHub
+- Black Duck, que se usa en muchas empresas
+- RubySec, una base de datos de consulta para Ruby
+- Retire.js, una herramienta para comprobar si las bibliotecas de JavaScript no están actualizadas; se puede usar como un complemento para varias herramientas, incluida Burp Suite
+
+También se pueden usar algunas herramientas creadas específicamente para análisis de código estático:
+- Roslyn Security Guard
+- Puma Scan
+- PT Application Inspector
+- Apache Maven Dependency Plugin
+- Source Clear
+- Sonatype
+- Node Security Platform
+- WhiteSource
