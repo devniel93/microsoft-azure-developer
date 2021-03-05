@@ -36,3 +36,14 @@ Siempre. Se deben validar todos los datos de entrada de la aplicación. Esto inc
 
 ### Codificar siempre los datos de salida
 Todos los datos de salida que presente visualmente o en un documento deberán codificarse e incluir caracteres de escape. Este principio de diseño permite asegurarse de que todo se muestra como salida y que no se interpreta involuntariamente como elementos ejecutables, que es en lo que consiste otra técnica de ataque común conocida como "scripting entre sitios" (XSS).
+
+---
+
+## _Secretos de Key Vault_
+Los secretos no son secretos si se comparten con todos. Almacenar elementos confidenciales como cadenas de conexión, tokens de seguridad, certificados y contraseñas en el código es simplemente invitar a alguien a tomarlos y usarlos para algo distinto de lo que se pretendía. 
+
+### ¿Qué es Azure Key Vault?
+Es un almacén de secretos: un servicio centralizado en la nube para almacenar secretos de aplicación. Key Vault ayuda a mantener seguros los datos confidenciales al mantener los secretos de aplicación en una sola ubicación central y proporcionar acceso seguro, control de permisos y registro de acceso.
+
+### ¿Por qué usar un almacén de claves para los secretos?
+La administración de claves y el almacenamiento de secretos puede ser algo complicado y propenso a errores cuando se realiza manualmente. La rotación manual de certificados significa potencialmente prescindir de ellos durante algunas horas o días.
