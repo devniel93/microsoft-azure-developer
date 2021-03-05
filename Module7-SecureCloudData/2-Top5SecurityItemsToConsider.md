@@ -25,3 +25,14 @@ El nivel gratuito ofrece recomendaciones, evaluaciones y directivas de seguridad
 2. Seleccionar Directiva de Seguridad > Editar Configuracion
 3. Seleccionar Plan de Tarifa > hacer clic en el cuadro Gratis 
 4. Guardar
+
+--- 
+
+## _Entradas y salidas_
+El punto débil de seguridad más frecuente de las aplicaciones de hoy en día es no procesar correctamente los datos recibidos de orígenes externos, especialmente las entradas de usuario.
+
+### ¿Cuándo hay que validar los datos de entrada?
+Siempre. Se deben validar todos los datos de entrada de la aplicación. Esto incluye los parámetros en la dirección URL, las entradas de usuario, los datos de la base de datos, los datos de una API y todo lo que se pase que un usuario pudiera manipular potencialmente. Use siempre listas de permitidos para aceptar solo datos de entrada "buenos conocidos", en lugar de listas de no permitidos (que buscan específicamente datos de entrada incorrectos), porque es imposible crear una lista completa con todos los datos de entrada potencialmente peligrosos.
+
+### Codificar siempre los datos de salida
+Todos los datos de salida que presente visualmente o en un documento deberán codificarse e incluir caracteres de escape. Este principio de diseño permite asegurarse de que todo se muestra como salida y que no se interpreta involuntariamente como elementos ejecutables, que es en lo que consiste otra técnica de ataque común conocida como "scripting entre sitios" (XSS).
