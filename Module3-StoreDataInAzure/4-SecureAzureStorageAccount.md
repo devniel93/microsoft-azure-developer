@@ -5,7 +5,7 @@ Todos los datos escritos en Azure Storage se cifran automáticamente mediante St
 - Azure Key Vault almacena las claves automáticamente para ayudar a controlar y administrar los secretos.
 
 ## _Cifrado en tránsito_
-Se mantiene los datos protegidos al habilitar segurindad de nivel de transporte entre Azure y el cliente. Para esto se debe usar HTTPS para la protección de la comunicación. También, se aplica transferencia seguria a través de SMB 3.0 para los recursos compartidos de archivos.
+Se mantiene los datos protegidos al habilitar segurindad de nivel de transporte entre Azure y el cliente. Para esto se debe usar HTTPS para la protección de la comunicación. También, se aplica transferencia segura a través de SMB 3.0 para los recursos compartidos de archivos.
 
 ## Compatibilidad con CORS
 Azure storage permite el acceso entre dominios mediante CORS, el cual se usa como encabezados de HTTP para que una app web en cierto dominio pueda acceder a los recursos de un servidor de otro dominio. 
