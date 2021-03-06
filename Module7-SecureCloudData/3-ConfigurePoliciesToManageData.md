@@ -46,3 +46,30 @@ La clasificación tiene dos atributos de metadatos:
 La personalización de la taxonomía de clasificación se realiza en una ubicación central para todo el inquilino de Azure: Azure Security Center.
 
 Como parte de la administración de directivas de Azure Information Protection, puede definir etiquetas personalizadas, clasificarlas y asociarlas con un conjunto selecto de tipos de información. También puede agregar sus propios tipos de información personalizados y configurarlos con patrones de cadena, que se agregan a la lógica de detección para identificar este tipo de datos en las bases de datos. 
+
+1. En Azure Portal > Crear recurso > Base de datos SQL
+2. Ingresar nombre de BD, suscripcion, RG, no usar grupo elastico de SQL
+3. En servidor > Crear nuevo > Ingresar nombre, usuario admin, password, ubicacion
+4. Seleccionar Configuracion Adicional > Origen de Datos > Usar datos existentes > seleccionar Muestra
+4. En Habilitar Advanced Data Security > seleccionar Iniciar prueba gratuita
+5. Revisar y crear > crear
+
+## _SQL Information Protection (SQL IP)_
+SQL IP incluye un conjunto de servicios avanzados y funcionalidades de SQL que forman un nuevo paradigma de protección de la información en SQL destinado a proteger los datos
+
+- Auditorías de Azure SQL: realizan un seguimiento de los eventos de una base de datos y los escriben en un registro de auditoría en la cuenta de Azure Storage, el área de trabajo de Log Analytics o el centro de eventos.
+- Detección y clasificación de datos: se integran en Azure SQL Database, Azure SQL Managed Instance y Azure Synapse Analytics. Ofrece funcionalidades avanzadas para detectar, clasificar, etiquetar e informar de los datos confidenciales de las bases de datos.
+- Enmascaramiento dinámico de datos: Azure SQL Database, Azure SQL Managed Instance y Azure Synapse Analytics son compatibles con el enmascaramiento dinámico de datos, el cual limita la exposición de información confidencial ocultándolos a los usuarios sin privilegios.
+- Security Center: examina las bases de datos y ofrece recomendaciones para mejorar la seguridad. También permite configurar y supervisar alertas de seguridad.
+- Cifrado de datos transparente: esta tecnología cifra sus bases de datos, copias de seguridad y registros en reposo sin realizar cambios en la aplicación. Para habilitar el cifrado, vaya a cada base de datos.
+
+### Clasificación de una instancia de bases de datos SQL
+1. En Azure Portal > Azure SQL Database > Seguridad > seleccionar Security Center
+2. Habilitar Advanced Data Security
+3. Seleccionar Securty Center > Deteccion y clasifificacion de datos > Aceptar las recomendaciones seleccionadas > Guardar 
+4. Revisar en la seccion de Deteccion y clasificacion de datos el resumen del estado de clasificacion y una lista con las columnas clasificadas
+
+### Clasificación de su instancia de bases de datos SQL
+Un aspecto importante del paradigma de protección de la información es la capacidad de supervisar el acceso a información confidencial. Azure SQL Database Auditing se ha mejorado para incluir un nuevo campo en el registro de auditoría. El campo data_sensitivity_information registra las clasificaciones de confidencialidad (etiquetas) de los datos reales devueltos por la consulta.
+
+
