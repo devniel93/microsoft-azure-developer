@@ -67,3 +67,23 @@ Azure Resource Manager puede implementar de manera segura los certificados almac
 
 - Para recuperar almacenes de claves u objetos de almacén de claves si se eliminan:
 La eliminación de almacenes de claves u objetos de almacén de claves puede ser involuntaria o malintencionada. Habilitar las características de protección de purga y eliminación temporal de Key Vault, especialmente para las claves que se usan para cifrar datos en reposo. 
+
+--- 
+
+## _Administración del acceso a secretos, certificados y claves_
+Al acceso de Key Vault tiene dos aspectos: la administración del propio almacén de claves y el acceso a los datos que contiene. En la documentación se hace referencia a estos aspectos como el plano de administración y el plano de datos.
+
+Para acceder a un almacén de claves, todos los usuarios o aplicaciones deben tener la autenticación correcta para identificar al autor de la llamada y autorización para determinar las operaciones que puede realizar el autor de la llamada.
+
+### Authentication
+Azure Key Vault usa Azure Active Directory (Azure AD) para autenticar los usuarios y las aplicaciones que intentan acceder a un almacén. 
+
+### Autorización
+Las operaciones de administración (la creación de una instancia de Azure Key Vault) usan el control de acceso basado en rol (RBAC). Existe un rol integrado de Colaborador de almacén de claves que proporciona acceso a las características de administración de los almacenes de claves, pero no permite el acceso a los datos del almacén de claves. Es el rol que se recomienda usar. También hay un rol de Colaborador que incluye derechos de administración completos, incluida la capacidad de conceder acceso al plano de datos.
+
+En las operaciones de lectura y escritura de datos en el almacén de claves se usa una directiva de acceso de Key Vault, el cual sirve para dar permisos a un usuario para leer, escribir o eliminar secretos y claves. Puede crear una directiva de acceso mediante la CLI, la API REST o Azure Portal.
+
+Los desarrolladores solo necesitarán los permisos Get y List para un almacén de entorno de desarrollo. Un desarrollador principal o jefe necesitará permisos completos para el almacén para cambiar y agregar secretos cuando sea necesario. Los permisos completos para los almacenes del entorno de producción se reservan normalmente para el personal de operaciones superior. En el caso de las aplicaciones, a menudo solo necesitan permisos Get, ya que solo tendrán que recuperar secretos.
+
+## _Restricción del acceso de red_
+Se debe tener en cuenta con Azure Key Vault es qué servicios de la red pueden acceder al almacén. Se debe determinar el acceso de red mínimo necesario; por ejemplo, puede restringir los puntos de conexión de Key Vault a subredes específicas de Azure Virtual Network, a direcciones IP concretas o a servicios de Microsoft de confianza, como Azure SQL, Azure App Service y distintos servicios de datos y almacenamiento en los que se usen claves de cifrado.
