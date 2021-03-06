@@ -109,3 +109,27 @@ Para recuperar el valor del secret:
 ```
 Get-AzKeyVaultSecret -VaultName 'VaultamortDiaryDevniel' -Name 'HiddenLocation'
 ```
+
+---
+
+## _Administración de certificados_
+Se debe asegurar de que la clave privada se mantiene segura. Ya que los certificados tienen una fecha de expiraciónm, se deben renovar periódicamente para asegurarse de que el tráfico del sitio web es seguro.
+
+### Adición de certificados a un almacén de claves
+Azure Key Vault administra certificados basados en X.509 que pueden provenir de varios orígenes:
+
+- En primer lugar, se puede crear certificados autofirmados desde Azure Portal, donde se crea un par de claves publica y privada y se firma el certificado con su propia clave. Esto se debe usar para pruebas y desarrollo.
+
+- En segundo lugar, se puede crear una solicitud de forma de certificado (CSR) X.509, el cual crea un par de claves publica y privada en Key Vault con un CSR que se puede pasar a la entidad de certificacion (CA), luego el ecrtificado X.509 firmado se puede combinar con el par de claves del Key VAult para finalizar el certificado. Este enfoque funciona con cualquier emisor de certiifcados y proporcinoa mejor seguridad ya que la clave privada se crea y protege con Key Vault y nunca se revela.
+
+- En terecer lugar, similar a la creacion del CSR, se puede conectar el almacen de claves con un emisor de certificados de confianza y crear el certificado directamente en Key Vault. Este enfoque ofrece diferentes ventajas. Como el almacén de claves está conectado a la entidad de certificación emisora, puede administrar y supervisar el ciclo de vida del certificado. Esto significa que puede renovar el certificado de forma automática, notificarle la expiración y supervisar eventos como, por ejemplo, si el certificado se ha revocado.
+
+### Recuperación de certificados de un almacén de claves
+Una vez que se ha almacenado un certificado en Azure Key Vault, puede usar Azure Portal para explorar las propiedades del certificado, así como para habilitar o deshabilitar un certificado para que no esté disponible para los clientes.
+
+### Integración de Azure App Service
+1. En configuracion > Seleccionar Configuracion TLS/SSL 
+2. Seleccionar Certificado de clave privada
+3. Seleccionar Importar certificado de Key Vault
+4. Después, puede seleccionar el almacén (que debe estar en la misma suscripción) y el secreto que contiene el certificado.
+* El certificado debe ser un certificado X.509 con un tipo de contenido de application/x-pkcs12 y no puede tener una contraseña.
