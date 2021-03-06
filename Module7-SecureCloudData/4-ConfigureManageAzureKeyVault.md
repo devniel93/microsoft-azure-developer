@@ -87,3 +87,25 @@ Los desarrolladores solo necesitarán los permisos Get y List para un almacén d
 
 ## _Restricción del acceso de red_
 Se debe tener en cuenta con Azure Key Vault es qué servicios de la red pueden acceder al almacén. Se debe determinar el acceso de red mínimo necesario; por ejemplo, puede restringir los puntos de conexión de Key Vault a subredes específicas de Azure Virtual Network, a direcciones IP concretas o a servicios de Microsoft de confianza, como Azure SQL, Azure App Service y distintos servicios de datos y almacenamiento en los que se usen claves de cifrado.
+
+--- 
+
+## _Almacenamiento de secretos en Azure Key Vault_
+1. En Azure Portal > Crear recurso > Azure Key Vault
+2. Ingresar la suscripcion, el RG, nombre unico global, region y plan de tarifa
+3. Revisar y crear > Crear
+4. En Configuracion > seleccionar Secretos 
+5. Seleccionar Generar/Importar
+6. En Crear un secreto > Ingresar opciones de carga Manual, nombre HiddenLocation, Valor el secret, tipo de contenido Text
+D@niel###@@@#
+7. Crear
+
+Para obtener el almacen creado por Azure PowerShell:
+```
+Get-AzKeyVault
+```
+
+Para recuperar el valor del secret:
+```
+Get-AzKeyVaultSecret -VaultName 'VaultamortDiaryDevniel' -Name 'HiddenLocation'
+```
