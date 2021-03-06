@@ -91,3 +91,26 @@ El almacenamiento inmutable permite:
 
 ### Retenciones legales
 Cuando hay expectativas razonables de litigio, se exige a las organizaciones conservar la información almacenada electrónicamente. Estas expectativas suelen existir antes de que se conozcan los detalles del caso y la preservación suele ser amplia. Si se establece una suspensión legal, tanto los blobs nuevos como los existentes permanecen en estado inmutable hasta que se elimine dicha suspensión.
+
+---
+
+## _Definición de la soberanía de datos_
+La información digital siempre está sujeta a las leyes del país o región donde se almacenan. Este concepto se conoce como soberanía de los datos. Muchos de los problemas en torno a la soberanía de los datos tienen que ver con la puesta en marcha de regulaciones de privacidad y los esfuerzos por evitar que los datos que se almacenan en un país extranjero sean requeridos mediante citación por el gobierno del país o la región donde se hospedan.
+
+### Regiones emparejadas
+Azure funciona en varias ubicaciones geográficas del mundo. Una ubicación geográfica de Azure es un área definida del mundo que contiene al menos una región de Azure. Una región de Azure es un área que contiene uno o varios centros de datos. Cada región de Azure se empareja con otra región de la misma zona geográfica, conformando lo que se denomina par de regiones. La excepción es el Sur de Brasil, ya que se trata de una región emparejada con otra que se encuentra fuera de su ubicación geográfica.
+
+En los pares de regiones, Azure serializa las actualizaciones de la plataforma (o el mantenimiento planeado), de forma que solo se actualiza una región de cada vez. Si se produce una interrupción que afecta a varias regiones, se dará prioridad a la recuperación de una de las regiones de cada par.
+
+### Clave de número de actividades entre regiones
+- Azure Compute (IaaS): para asegurarse de que haya recursos disponibles en otra región durante un desastre, se deben aprovisionar más recursos de proceso de antemano. 
+- Azure Storage: el almacenamiento con redundancia geográfica (GRS) los datos se replican automáticamente tres veces dentro de la región primaria y tres veces en una región emparejada. 
+- Azure SQL Database: con la replicación geográfica de Azure SQL Database, puede configurar la replicación asincrónica de las transacciones en cualquier región del mundo.
+- Azure Resource Manager: proporciona de forma inherente aislamiento lógico de los componentes entre regiones. Esto significa que es menos probable que los errores lógicos de una región afecten a otras regiones.
+
+### Ventajas de la clave de número de regiones emparejadas de Azure
+- Aislamiento físico
+- Replicación proporcionada por la plataforma
+- Orden de recuperación de región
+- Actualizaciones en secuencia
+- Residencia de datos
