@@ -72,4 +72,22 @@ SQL IP incluye un conjunto de servicios avanzados y funcionalidades de SQL que f
 ### Clasificación de su instancia de bases de datos SQL
 Un aspecto importante del paradigma de protección de la información es la capacidad de supervisar el acceso a información confidencial. Azure SQL Database Auditing se ha mejorado para incluir un nuevo campo en el registro de auditoría. El campo data_sensitivity_information registra las clasificaciones de confidencialidad (etiquetas) de los datos reales devueltos por la consulta.
 
+---
 
+## _Exploración de la recuperación, retención y eliminación de datos_
+Una vez examinados y clasificados los datos de una organización, lo siguiente es revisar el tiempo durante el que se van a conservar los datos. La recuperación y eliminación de datos son un aspecto esencial de la administración de los recursos de datos. Una directiva de retención de datos define los principios de recuperación y eliminación de datos, y se aplica de la misma manera que la reclasificación de datos. 
+
+La definición de una directiva de datos confidenciales puede garantizar que los datos se almacenen y eliminen de acuerdo con los procedimientos recomendados. 
+
+### Almacenamiento inmutable y retención de datos
+El almacenamiento inmutable de Azure Blob Storage permite a los usuarios almacenar los datos críticos de la empresa en un estado WORM (escribir una vez, leer muchas). En este estado, los usuarios no pueden borrar ni modificar los datos durante el intervalo de tiempo especificado por el usuario. Los blobs se pueden crear y leer, pero no modificar ni eliminar, durante el periodo de retención.
+
+El almacenamiento inmutable permite:
+- Compatibilidad con directivas de retención con duración definida
+- Compatibilidad con directivas de suspensión legal:
+- Compatibilidad con todos los niveles de blobs
+- Configuración en el nivel de contenedor
+- Compatibilidad con el registro de auditoría
+
+### Retenciones legales
+Cuando hay expectativas razonables de litigio, se exige a las organizaciones conservar la información almacenada electrónicamente. Estas expectativas suelen existir antes de que se conozcan los detalles del caso y la preservación suele ser amplia. Si se establece una suspensión legal, tanto los blobs nuevos como los existentes permanecen en estado inmutable hasta que se elimine dicha suspensión.
