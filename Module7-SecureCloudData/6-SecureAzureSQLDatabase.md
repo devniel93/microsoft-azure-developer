@@ -140,3 +140,64 @@ Dado que la VM se ejecuta en Azure, podemos usar una regla de red virtual de niv
 2. Dejar los valores predeterminados > Habilitar > OK
 3. Eliminar la regla "Allow appServer" 
 4. Comprobar conexion. Lo que se hizo quita cualquier acceso público a SQL Server y solo permite el acceso desde la subred específica de la red virtual de Azure que hemos definido. Si tuviéramos que agregar servidores de aplicación adicionales en que la subred, no sería necesaria ninguna configuración adicional, ya que cualquier servidor en esa subred tendría la capacidad para conectarse a SQL server
+
+---
+
+## _Control de quién puede acceder a la base de datos_
+Aunque es posible que podamos conectarnos a la base de datos a través de la red, eso no significa que realmente podamos obtener acceso a los datos.
+
+### Autenticación
+Es el proceso de comprobación de una identidad. Esta identidad puede ser un usuario, un servicio que se ejecuta en un sistema o un sistema (por ejemplo, una máquina virtual). SQL Database admite dos tipos de autenticación: Autenticación de SQL y autenticación de Azure Active Directory.
+
+#### Autenticación de SQL
+Utiliza un nombre de usuario y una contraseña. Las cuentas de usuario se pueden crear en la base de datos maestra y se les puede conceder permisos en todas las bases de datos del servidor.
+
+#### Autenticación con Azure Active Directory
+Este método de autenticación usa las identidades administradas por Azure Active Directory (AD) y es compatible con dominios administrados e integrados. Si se desea usar la autenticación de AzureAD, debe crear otro administrador de servidor llamado "administrador de Azure AD" con permiso para administrar usuarios y grupos de Azure AD. 
+
+### Autorización
+Se refiere a lo que un usuario puede hacer en una Azure SQL Database. Esto se controla mediante los permisos concedidos directamente a la cuenta de usuario o a las pertenencias a roles de base de datos. Un rol de base de datos se usa para agrupar permisos conjuntamente para facilitar la administración, y se agrega un usuario a un rol para concederle los permisos que tiene el rol.
+
+## _Autenticación y autorización puestas en práctica_
+1. Creación de un usuario de base de datos
+Conectarse a la BD desde la VM de appServer
+```
+sqlcmd -S tcp:server19870.database.windows.net,1433 -d marketplaceDb -U admindevniel -P Devniel93##@@__ -N -l 30
+```
+
+Crear el usuario. Este es un usuario de BD independiente y solo tiene acceso a la BD marketplace.
+```
+CREATE USER ApplicationUser WITH PASSWORD = 'YourStrongPassword1';
+GO
+```
+
+2. Concesión de permisos a un usuario
+Ejecutar lo siguiente para conceder los roles db_datareader y db_datawriter al usuario
+```
+ALTER ROLE db_datareader ADD MEMBER ApplicationUser;
+ALTER ROLE db_datawriter ADD MEMBER ApplicationUser;
+GO
+```
+
+Para denegar que el usuario ejecute select a la tabla SalesLT.Address
+```
+DENY SELECT ON SalesLT.Address TO ApplicationUser;
+GO
+```
+
+3. Iniciar sesion con el usuario ApplicationUser
+```
+sqlcmd -S tcp:server19870.database.windows.net,1433 -d marketplaceDb -U 'ApplicationUser' -P 'YourStrongPassword1' -N -l 30
+```
+4. Comprobar permisos de acceso a datos del usuario 
+Ejecutar select a una tabla con permisos
+```
+SELECT FirstName, LastName, EmailAddress, Phone FROM SalesLT.Customer;
+GO
+```
+
+Ejecutar select a una tabla sin permisos . Este arrojara un resultado de error por pemiso denegado.
+```
+SELECT * FROM SalesLT.Address;
+GO
+```
