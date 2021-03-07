@@ -237,3 +237,68 @@ En la pantalla Reglas de enmascaramiento se muestra una lista de las máscaras d
 SELECT FirstName, LastName, EmailAddress, Phone FROM SalesLT.Customer;
 GO
 ```
+
+---
+
+## _Supervisión de la base de datos_
+Azure SQL Database tiene características integradas que pueden ayudar a realizar un seguimiento de lo que sucede en la base de datos, y supervisarán y le alertarán si se identifica actividad malintencionada.
+
+### Auditoría de Azure SQL Database
+Al habilitar la auditoría, las operaciones que se producen en la base de datos se almacenan para su posterior inspección o para que las herramientas automatizadas las analicen. 
+Usar auditoria para:
+- Conservar una traza de auditoría de eventos seleccionados. Puede definir categorías de acciones de base de datos para auditar.
+- Informar sobre la actividad de la base de datos. Puede usar informes preconfigurados y un panel para dar los primeros pasos más rápido con el informe de actividades y eventos.
+- Analizar informes. Puede buscar eventos sospechosos, actividades inusuales y tendencias.
+
+Los registros de auditoría se escriben en Anexar blobs en una cuenta de Azure Blob Storage que designe. Se pueden ver por Azure Portal y enviarlos a Log Analytics o al Centro de eventos para su posterior procesamiento y análisis.
+
+## _La auditoría en la práctica_
+Como procedimiento recomendado, no habilite la auditoría de blobs de servidor ni la auditoría de blobs de base de datos, a menos que:
+
+- Quiera usar una cuenta de almacenamiento o un período de retención diferentes para una base de datos específica.
+- Quiera auditar tipos de eventos o categorías para una base de datos específica que difiere del resto de las bases de datos del servidor. Por ejemplo, es posible que tenga inserciones de tabla que deban auditarse, pero solo para una base de datos concreta.
+
+En caso contrario, se recomienda habilitar solo la auditoría de blobs de nivel de servidor y dejar que la auditoría de nivel de base de datos esté deshabilitada para todas las bases de datos.
+
+Para configurar auditoria:
+1. En Azure Portal > buscar y seleccionar el server app
+2. En seguridad > seleccionar Auditoria > Hailitar la Auditoria
+3. Seleccionar la casilla de verificacion Almacenamiento > seleccionarDetalles de Almacenamiento
+4. En Configuración de almacenamiento > crear cuenta de almacenamiento > Aceptar > Guardar
+5. Conectarse a la BD desde la VM
+6. Realizar un select
+```
+SELECT FirstName, LastName, EmailAddress, Phone FROM SalesLT.Customer;
+GO
+```
+7. Comprobar logs de auditoria en Azure Portal 
+
+## _Advanced Data Security para Azure SQL Database_
+Advanced Data Security (ADS) proporciona un conjunto de capacidades avanzadas de seguridad de SQL:
+- Clasificación y detección de datos: descubrir, clasificar, etiquetar y proteger la información confidencial de las bases de datos.
+- Evaluación de vulnerabilidades: detectar las posibles vulnerabilidades de la base de datos, así como hacer un seguimiento y ayudar a corregirlas.
+- Advanced Threat Protection: detectar actividades anómalas que indica intentos poco habituales y posiblemente dañinos de acceder a sus bases de datos o aprovecharse de ella.
+
+### Instalación y configuración de ADS
+1. En Azure Portal > buscar y seleccionar el servidor SQL.
+2. En Seguridad > seleccionar Security Center 
+3. Seleccionar el boton Activar para habilitar Azure Defender para SQL.
+4. En Configuración de la evaluación de vulnerabilidades dejar la cuenta de almacenamiento.
+5. Activar exámenes periódicos recurrentes con el fin de configurar Evaluación de vulnerabilidad y, de este modo, ejecutar exámenes automáticos una vez por semana > Guardar
+6. Definir correo en Enviar también por correo electrónico una notificación a los administradores y a los propietarios de la suscripción.
+7. En tipos de de Advanced Threat Protection > sekeccuibar Todo para permitir lo siguiente:
+- Informes de inyecciones de código SQL en que se hayan producido ataques de inyecciones de código SQL.
+- Informes de vulnerabilidad de inyecciones de código SQL en que es probable que se produzca una inyección de código SQL.
+- Inicio de sesión de cliente anómalo examina los inicios de sesión irregulares que podrían ser motivo de preocupación como, por ejemplo, la posibilidad de que un atacante obtuviera acceso.
+8. Guardar. Se iniciar los examenes de vulnerabilidades y se vera los resultados en un nivel de base de datos y se recibira correo.
+
+## _Clasificación y detección de datos_
+1. En Azure Portal > buscar y seleccionar la DB marketplace
+2. En Seguridad > seleccionar Advanced Data Security
+3. Seleccionar Clasificación y detección de datos. Se mostaran las reomcnedaciones de protecion para las columnas.
+
+## _Evaluación de vulnerabilidad_
+En panel de Evaluación de vulnerabilidad. Se senumeran los problemas de configuración de la base de datos y el riesgo asociado.
+
+## _Detección de amenazas_
+En el panel Detección de amenazas se muestra una lista de las amenazas detectadas como un posible ataque por inyección de código SQL.
