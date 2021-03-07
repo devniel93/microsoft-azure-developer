@@ -201,3 +201,39 @@ Ejecutar select a una tabla sin permisos . Este arrojara un resultado de error p
 SELECT * FROM SalesLT.Address;
 GO
 ```
+
+---
+
+## _Protección de los datos en tránsito, en reposo y en pantalla_
+En la base de datos marketplaceDb se almacena información confidencial, como direcciones físicas, direcciones de correo electrónico y números de teléfono. Si se expone, atacantes malintencionados podrían usarla para dañar nuestro negocio o a nuestros clientes.
+
+### Cifrado de red TLS
+Azure SQL Database aplica cifrado de Seguridad de la capa de transporte (TLS) en todo momento para todas las conexiones, lo que garantiza que todos los datos se cifran "en tránsito" entre la base de datos y el cliente. El cifrado TLS es un estándar de protección del tráfico a través de Internet y en este caso garantiza la seguridad en el tráfico de red hacia y desde Azure SQL Database.
+
+### Cifrado de datos transparente
+Azure SQL Database protege los datos en reposo con cifrado de datos transparente (TDE). TDE realiza cifrado y descifrado de la base de datos en tiempo real, copias de seguridad asociadas y archivos de registro de transacciones en reposo sin necesidad de efectuar cambios en la aplicación. Mediante una clave de cifrado de base de datos, el cifrado de datos transparente realiza el cifrado de E/S en tiempo real y el descifrado de los datos en el nivel de página. Todas las páginas se descifran cuando se leen en la memoria y después se cifran antes de escribirse en el disco.
+
+Para comprobar que el Cifrado de datos transparente este activo
+1. En Azure Portal > seleccionar la BD marketplaceDb
+2. En Seguridad > seleccionar Cifrado de datos transparente
+3. Cifrado de datos en Activo
+
+### Enmascaramiento dinámico de datos
+Mediante el uso de la característica de enmascaramiento dinámico de datos de Azure SQL Database, podemos limitar los datos que se muestran al usuario. El enmascaramiento dinámico de datos es una característica de seguridad basada en directivas que oculta los datos confidenciales en el conjunto de resultados de una consulta sobre los campos designados de la base de datos, aunque los datos de la base de datos no cambian.
+
+Las reglas de enmascaramiento de datos constan de información sobre la columna a la que se aplicará la máscara y cómo se deben enmascarar los datos. Se puede crear su propio formato de enmascaramiento, o usar una de las máscaras estándares.
+
+Al consultar las columnas, los administradores de bases de datos siguen viendo los valores originales, pero los usuarios que no son administradores ven los valores enmascarados. Puede permitir que otros usuarios vean las versiones no enmascaradas si los incluye en los usuarios SQL excluidos de la lista de enmascaramiento.
+
+1. En Azure Portal > seleccionar la BD marketplaceDb
+2. En Seguridad > seleccionar Enmascaramiento dinamico de datos
+En la pantalla Reglas de enmascaramiento se muestra una lista de las máscaras dinámicas de datos existentes y recomendaciones para las columnas a las que se debería aplicar un enmascaramiento dinámico de datos.
+3. Seleccionar Agregar mascara > Agregar regla de enmascaramiento 
+4. Ingresar los valores de esquema, tabla, columna, formato del campo de enmascaramiento, prefijo expuesto, cadena de relleno, sufijo expuesto
+5. Guardar
+6. Conectarse a la BD desde la VM appServer
+7. Realizar select de las columnas y tabla y comprobar que estan enmascaradas
+```
+SELECT FirstName, LastName, EmailAddress, Phone FROM SalesLT.Customer;
+GO
+```
