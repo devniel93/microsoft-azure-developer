@@ -1,0 +1,21 @@
+{
+  "name": "exercise-files",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint --ext .js --fix src"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@azure/cosmos": "^3.9.2"
+  },
+  "devDependencies": {
+    "eslint": "^7.13.0",
+    "eslint-config-eslint": "^6.0.0",
+    "eslint-plugin-jsdoc": "^30.7.7",
+    "eslint-plugin-node": "^11.1.0"
+  }
+}
